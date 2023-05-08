@@ -1,7 +1,9 @@
 package filter;
 
 import image.ImageMatrix;
-
+/**
+ * a filter that changes the brightness of an image
+ */
 public class BrightnessFilter implements Filter {
 
 	private final static int BRIGHTNESS_STEP_COUNT = 10;
