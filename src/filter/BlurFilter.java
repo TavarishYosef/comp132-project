@@ -11,7 +11,7 @@ public class BlurFilter implements Filter {
 	/**
 	 * Applies blur to the ImageMatrix to the specified degree
 	 * 
-	 * @param imageMatrix the image matrix to apply the filter to
+	 * @param image the image matrix to apply the filter to
 	 * @param degree      the degree of the filter
 	 * @return a new image matrix with the blur filter applied
 	 * @see ImageMatrix

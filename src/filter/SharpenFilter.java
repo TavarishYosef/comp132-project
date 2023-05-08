@@ -11,25 +11,25 @@ public class SharpenFilter implements Filter {
 	/**
 	 * Applies sharpen to the ImageMatrix to the specified degree
 	 *
-	 * @param imageMatrix the image matrix to apply the filter to
+	 * @param image the image matrix to apply the filter to
 	 * @param degree      the degree of the filter
 	 * @return a new image matrix with the sharpen filter applied
 	 * @see ImageMatrix
 	 */
 	@Override
-	public ImageMatrix apply(ImageMatrix imageMatrix, int degree) {
+	public ImageMatrix apply(ImageMatrix image, int degree) {
 		// First, we need to blur the original image
 		BlurFilter blurFilter = new BlurFilter();
-		ImageMatrix blurredImageMatrix = blurFilter.apply(imageMatrix, degree);
+		ImageMatrix blurredImageMatrix = blurFilter.apply(image, degree);
 
 		// Then, we need to calculate the difference between the original image and the
 		// blurred image
-		ImageMatrix detailImageMatrix = new ImageMatrix(imageMatrix.getWidth(), imageMatrix.getHeight());
-		for (int i = 0; i < imageMatrix.getWidth(); i++) {
-			for (int j = 0; j < imageMatrix.getHeight(); j++) {
-				int originalRed = imageMatrix.getRed(i, j);
-				int originalGreen = imageMatrix.getGreen(i, j);
-				int originalBlue = imageMatrix.getBlue(i, j);
+		ImageMatrix detailImageMatrix = new ImageMatrix(image.getWidth(), image.getHeight());
+		for (int i = 0; i < image.getWidth(); i++) {
+			for (int j = 0; j < image.getHeight(); j++) {
+				int originalRed = image.getRed(i, j);
+				int originalGreen = image.getGreen(i, j);
+				int originalBlue = image.getBlue(i, j);
 
 				int blurredRed = blurredImageMatrix.getRed(i, j);
 				int blurredGreen = blurredImageMatrix.getGreen(i, j);
@@ -46,12 +46,12 @@ public class SharpenFilter implements Filter {
 		}
 
 		// Add the details to the original image to make it sharp
-		ImageMatrix sharpImageMatrix = new ImageMatrix(imageMatrix.getWidth(), imageMatrix.getHeight());
-		for (int i = 0; i < imageMatrix.getWidth(); i++) {
-			for (int j = 0; j < imageMatrix.getHeight(); j++) {
-				int originalRed = imageMatrix.getRed(i, j);
-				int originalGreen = imageMatrix.getGreen(i, j);
-				int originalBlue = imageMatrix.getBlue(i, j);
+		ImageMatrix sharpImageMatrix = new ImageMatrix(image.getWidth(), image.getHeight());
+		for (int i = 0; i < image.getWidth(); i++) {
+			for (int j = 0; j < image.getHeight(); j++) {
+				int originalRed = image.getRed(i, j);
+				int originalGreen = image.getGreen(i, j);
+				int originalBlue = image.getBlue(i, j);
 
 				int detailRed = detailImageMatrix.getRed(i, j);
 				int detailGreen = detailImageMatrix.getGreen(i, j);
