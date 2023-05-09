@@ -3,6 +3,8 @@ package image;
 import java.awt.image.BufferedImage;
 import java.util.UUID;
 
+import filter.Filter;
+
 /**
  * ImageMatrix is used to represent images.
  * 
@@ -97,6 +99,10 @@ public class ImageMatrix {
 
 	public static int convertRGB(int red, int green, int blue) {
 		return (red << 16 | green << 8 | blue);
+	}
+	
+	public ImageMatrix applyFilter(Filter filter, int degree) {
+		return filter.apply(this, degree);
 	}
 }
 
