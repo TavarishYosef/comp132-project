@@ -58,9 +58,9 @@ public class SharpenFilter implements Filter {
 				int detailBlue = detailImageMatrix.getBlue(i, j);
 
 				// Add the details to the original image to make it sharp
-				int red = Math.min(0, detailRed + originalRed);
-				int green = Math.min(0, detailGreen + originalGreen);
-				int blue = Math.min(0, detailBlue + originalBlue);
+				int red = Math.max(0, detailRed + originalRed);
+				int green = Math.max(0, detailGreen + originalGreen);
+				int blue = Math.max(0, detailBlue + originalBlue);
 
 				int sharpRGB = ImageMatrix.convertRGB(red, green, blue);
 				sharpImageMatrix.setRGB(i, j, sharpRGB);
