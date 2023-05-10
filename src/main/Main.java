@@ -12,10 +12,13 @@ SIGNATURE: <Yusuf Cemal Karatas, 83639>
 
 package main;
 
+import gui.LoginPage;
+
 public class Main {
 
 	public static void main(String[] args) {
 
+		LoginPage loginPage = new LoginPage();
 	}
 
 }
