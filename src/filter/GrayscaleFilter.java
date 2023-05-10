@@ -29,7 +29,7 @@ public class GrayscaleFilter implements Filter {
 				gray = Math.min(255, Math.max(0, gray));
 
 				int finalRed = Math.abs(gray*degree - red*(10-degree)) / 10;
-				int finalGreen = Math.abs(gray*degree - green*(10-degree) /10);
+				int finalGreen = Math.abs(gray*degree - green*(10-degree)) /10;
 				int finalBlue = Math.abs(gray*degree - blue*(10-degree)) / 10;
 				int grayRGB = ImageMatrix.convertRGB(finalRed, finalGreen, finalBlue);
 
