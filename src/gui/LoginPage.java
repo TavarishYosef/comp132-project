@@ -1,9 +1,7 @@
 package gui;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 public class LoginPage extends JFrame {
 	
@@ -12,8 +10,8 @@ public class LoginPage extends JFrame {
 
     public LoginPage() {
         // Set up the JFrame
-        setTitle("PhotoCloud Login Page2");
-        setSize(300, 200);
+        setTitle("PhotoCloud Login Page");
+        setSize(350, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Create the nickname label and text field
@@ -29,7 +27,7 @@ public class LoginPage extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: Validate the user's credentials and navigate to the profile or discover page
+                // TODO: Validate the user and navigate to the profile or discover page
             }
         });
 
@@ -40,6 +38,7 @@ public class LoginPage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO: Navigate to the Signup page
+            	signupLabel.setText(nicknameField.getText());
             }
         });
 
