@@ -3,10 +3,10 @@ package gui;
 import javax.swing.*;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.*;
 
+@SuppressWarnings("serial")
 public class LoginPage extends JFrame {
 	
     private JTextField nicknameField;
@@ -15,9 +15,10 @@ public class LoginPage extends JFrame {
     public LoginPage() {
         // Set up the JFrame
         setTitle("PhotoCloud Login Page");
-        setSize(350, 200);
+        setSize(450, 250);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        setLocationRelativeTo(null);
+        setResizable(false);
 
         // Create the nickname label and text field
         JLabel nicknameLabel = new JLabel("Nickname:");
@@ -43,6 +44,10 @@ public class LoginPage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO: Navigate to the Signup page
+            	setVisible(false);
+            	dispose();
+            	SignupPage signupPage = new SignupPage();
+            	signupPage.setVisible(true);
             }
         });
         
@@ -55,16 +60,19 @@ public class LoginPage extends JFrame {
         passwordPanel.add(passwordLabel);
         passwordPanel.add(passwordField);
         
+        JPanel buttonContainer = new JPanel(new GridLayout(1, 3));
         JPanel buttonsPanel = new JPanel(new GridLayout(4, 1));
         buttonsPanel.add(loginButton);
         buttonsPanel.add(new JLabel());
         buttonsPanel.add(signupLabel);
         buttonsPanel.add(signupButton);
+        buttonContainer.add(new JPanel());
+        buttonContainer.add(buttonsPanel);
+        buttonContainer.add(new JPanel());
         // Add the components to the JFrame
         add(nicknamePanel, BorderLayout.NORTH);
         add(passwordPanel, BorderLayout.CENTER);
-        add(buttonsPanel, BorderLayout.SOUTH);
-
+        add(buttonContainer, BorderLayout.SOUTH);
     }
 
 }
