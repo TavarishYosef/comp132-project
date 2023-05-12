@@ -1,9 +1,22 @@
 package gui;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionListener;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+import users.User;
 
 @SuppressWarnings("serial")
 public class SignupPage extends JFrame {
@@ -33,12 +46,12 @@ public class SignupPage extends JFrame {
 
 	public SignupPage() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(450, 300);
-        setLocationRelativeTo(null);
-        setResizable(false);
+		setSize(600, 300);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
 		// This panel is for controlling the window borders
@@ -68,6 +81,7 @@ public class SignupPage extends JFrame {
 		nameField.setColumns(20);
 
 		nameErrorLabel = new JLabel("");
+		nameErrorLabel.setForeground(Color.red);
 		GridBagConstraints gbc_nameErrorLabel = new GridBagConstraints();
 		gbc_nameErrorLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_nameErrorLabel.gridx = 2;
@@ -91,6 +105,7 @@ public class SignupPage extends JFrame {
 		surnameField.setColumns(20);
 
 		surnameErrorLabel = new JLabel("");
+		surnameErrorLabel.setForeground(Color.red);
 		GridBagConstraints gbc_surnameErrorLabel = new GridBagConstraints();
 		gbc_surnameErrorLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_surnameErrorLabel.gridx = 2;
@@ -116,6 +131,7 @@ public class SignupPage extends JFrame {
 		ageField.setColumns(10);
 
 		ageErrorLabel = new JLabel("");
+		ageErrorLabel.setForeground(Color.red);
 		GridBagConstraints gbc_ageErrorLabel = new GridBagConstraints();
 		gbc_ageErrorLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_ageErrorLabel.gridx = 2;
@@ -141,6 +157,7 @@ public class SignupPage extends JFrame {
 		emailField.setColumns(10);
 
 		emailErrorLabel = new JLabel("");
+		emailErrorLabel.setForeground(Color.red);
 		GridBagConstraints gbc_emailErrorLabel = new GridBagConstraints();
 		gbc_emailErrorLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_emailErrorLabel.gridx = 2;
@@ -166,6 +183,7 @@ public class SignupPage extends JFrame {
 		nicknameField.setColumns(10);
 
 		nicknameErrorLabel = new JLabel("");
+		nicknameErrorLabel.setForeground(Color.red);
 		GridBagConstraints gbc_nicknameErrorLabel = new GridBagConstraints();
 		gbc_nicknameErrorLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_nicknameErrorLabel.gridx = 2;
@@ -190,6 +208,7 @@ public class SignupPage extends JFrame {
 		add(passwordField, gbc_passwordField);
 
 		passwordErrorLabel = new JLabel("");
+		passwordErrorLabel.setForeground(Color.red);
 		GridBagConstraints gbc_passwordErrorLabel = new GridBagConstraints();
 		gbc_passwordErrorLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_passwordErrorLabel.gridx = 2;
@@ -207,6 +226,64 @@ public class SignupPage extends JFrame {
 		signupButton = new JButton("Signup");
 		signupButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				nameErrorLabel.setText("");
+				surnameErrorLabel.setText("");
+				ageErrorLabel.setText("");
+				emailErrorLabel.setText("");
+				nicknameErrorLabel.setText("");
+				passwordErrorLabel.setText("");
+
+				String name = nameField.getText();
+				String surname = surnameField.getText();
+				String age = ageField.getText();
+				String email = emailField.getText();
+				String nickname = nicknameField.getText();
+				String password = passwordField.getText();
+				boolean valid = true;
+				// Validate age
+				try {
+					int intAge = Integer.parseInt(age);
+					if (intAge < 0) {
+						ageErrorLabel.setText("Please enter a valid age");
+						valid = false;
+					}
+				} catch (NumberFormatException error) {
+					ageErrorLabel.setText("Please enter a valid age");
+					valid = false;
+				}
+
+				// Validate email
+				if (!email.matches("\\w+@.+\\..+")) {
+					emailErrorLabel.setText("Please enter a valid email");
+					valid = false;
+				}
+
+				// Validate nickname
+				if (!nickname.matches("\\w+")) {
+					nicknameErrorLabel.setText("Please enter a valid nickname");
+					valid = false;
+				}
+
+				// Validate password
+				if (password.length() < 4 || password.length() > 20) {
+					passwordErrorLabel.setText("Password should be between 4 and 20 characters long");
+					valid = false;
+				} else if (!password.matches("\\w+")) {
+					passwordErrorLabel.setText("Password must only contain alphanumeric characters");
+					valid = false;
+				}
+
+				if (valid) {
+					User user = new User(nickname, password, name, surname, Integer.parseInt(age), email);
+
+					try (FileWriter writer = new FileWriter("users.txt", true)) {
+						writer.write(nickname + "," + password + "," + name + "," + surname + "," + age + "," + email
+								+ "\n");
+					} catch (IOException err) {
+						System.err.println("Error saving user to file");
+						err.printStackTrace();
+					}
+				}
 			}
 		});
 		GridBagConstraints gbc_signupButton = new GridBagConstraints();
@@ -217,7 +294,7 @@ public class SignupPage extends JFrame {
 
 		loginButton = new JButton("Login");
 		loginButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);

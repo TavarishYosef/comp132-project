@@ -1,10 +1,19 @@
 package gui;
 
-import javax.swing.*;
-
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class LoginPage extends JFrame {
@@ -34,6 +43,21 @@ public class LoginPage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO: Validate the user and navigate to the profile or discover page
+            	String nickname = nicknameField.getText();
+            	String password = passwordField.getText();
+            	
+            	try (Scanner scanner = new Scanner(new File("users.txt"))) {
+                    while (scanner.hasNextLine()) {
+                        String line = scanner.nextLine();
+                        String[] parts = line.split(",");
+                        if (parts[0].equals(nickname) && parts[1].equals(password)) {
+                        	dispose();
+                        }
+                    }
+                } catch (FileNotFoundException err) {
+                    System.err.println("Error reading user file");
+                    err.printStackTrace();
+                }
             }
         });
 
