@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,6 +37,10 @@ public class LoginPage extends JFrame {
         // Create the password label and password field
         JLabel passwordLabel = new JLabel("Password:");
         passwordField = new JPasswordField(20);
+        
+        // Create error label
+        JLabel errorLabel = new JLabel("");
+        errorLabel.setForeground(Color.red);
 
         // Create the login button
         JButton loginButton = new JButton("Login");
@@ -52,7 +57,9 @@ public class LoginPage extends JFrame {
                         String[] parts = line.split(",");
                         if (parts[0].equals(nickname) && parts[1].equals(password)) {
                         	dispose();
-                        }
+                        } else {
+							errorLabel.setText("Invalid nickname and password");
+						}
                     }
                 } catch (FileNotFoundException err) {
                     System.err.println("Error reading user file");
@@ -83,6 +90,7 @@ public class LoginPage extends JFrame {
         JPanel passwordPanel = new JPanel();
         passwordPanel.add(passwordLabel);
         passwordPanel.add(passwordField);
+        passwordPanel.add(errorLabel);
         
         JPanel buttonContainer = new JPanel(new GridLayout(1, 3));
         JPanel buttonsPanel = new JPanel(new GridLayout(4, 1));

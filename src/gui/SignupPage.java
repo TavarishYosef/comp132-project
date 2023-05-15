@@ -240,6 +240,16 @@ public class SignupPage extends JFrame {
 				String nickname = nicknameField.getText();
 				String password = passwordField.getText();
 				boolean valid = true;
+				// Validate name and surname
+				name = name.strip();
+				surname = surname.strip();
+				if (name.equals("")) {
+					nameErrorLabel.setText("Please enter your name.");
+				}
+				
+				if (surname.equals("")) {
+					surnameErrorLabel.setText("Please enter your surname.");
+				}
 				// Validate age
 				try {
 					int intAge = Integer.parseInt(age);
@@ -277,8 +287,12 @@ public class SignupPage extends JFrame {
 					User user = new User(nickname, password, name, surname, Integer.parseInt(age), email);
 
 					try (FileWriter writer = new FileWriter("users.txt", true)) {
-						writer.write(nickname + "," + password + "," + name + "," + surname + "," + age + "," + email
-								+ "\n");
+						writer.write(nickname + "," + password + "," + name + "," + surname + "," + age + "," + email + "\n");
+						setVisible(false);
+						dispose();
+						LoginPage loginPage = new LoginPage();
+						loginPage.setVisible(true);
+						
 					} catch (IOException err) {
 						System.err.println("Error saving user to file");
 						err.printStackTrace();
