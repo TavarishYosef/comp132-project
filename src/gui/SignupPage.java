@@ -17,6 +17,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import users.User;
+import users.UserManager;
 
 @SuppressWarnings("serial")
 public class SignupPage extends JFrame {
@@ -45,9 +46,11 @@ public class SignupPage extends JFrame {
 	private JButton signupButton;
 
 	public SignupPage() {
+		// Set up the JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(600, 300);
 		setLocationRelativeTo(null);
+        setTitle("PhotoCloud Signup Page");
 		setResizable(false);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -238,8 +241,11 @@ public class SignupPage extends JFrame {
 				String age = ageField.getText();
 				String email = emailField.getText();
 				String nickname = nicknameField.getText();
+				@SuppressWarnings("deprecation")
 				String password = passwordField.getText();
 				boolean valid = true;
+				UserManager userManager = new UserManager();
+
 				// Validate name and surname
 				name = name.strip();
 				surname = surname.strip();
@@ -266,11 +272,17 @@ public class SignupPage extends JFrame {
 				if (!email.matches("\\w+@.+\\..+")) {
 					emailErrorLabel.setText("Please enter a valid email");
 					valid = false;
+				} else if (!userManager.checkEmail(email)) {
+					emailErrorLabel.setText("Email taken");
+					valid = false;
 				}
 
 				// Validate nickname
 				if (!nickname.matches("\\w+")) {
 					nicknameErrorLabel.setText("Please enter a valid nickname");
+					valid = false;
+				} else if (!userManager.checkNickname(nickname)) {
+					nicknameErrorLabel.setText("Username taken");
 					valid = false;
 				}
 
@@ -285,18 +297,18 @@ public class SignupPage extends JFrame {
 
 				if (valid) {
 					User user = new User(nickname, password, name, surname, Integer.parseInt(age), email);
-
+					userManager.addUser(user);
 					try (FileWriter writer = new FileWriter("users.txt", true)) {
-						writer.write(nickname + "," + password + "," + name + "," + surname + "," + age + "," + email + "\n");
-						setVisible(false);
-						dispose();
-						LoginPage loginPage = new LoginPage();
-						loginPage.setVisible(true);
-						
+						writer.write(nickname.toLowerCase() + "," + password + "," + name + "," + surname + "," + age + "," + email + "\n");
 					} catch (IOException err) {
-						System.err.println("Error saving user to file");
+						System.err.println("Error saving user to users.txt");
 						err.printStackTrace();
 					}
+
+					setVisible(false);
+					ProfilePage profilePage = new ProfilePage();
+					profilePage.setVisible(true);
+					dispose();
 				}
 			}
 		});

@@ -38,6 +38,30 @@ public class User {
 		return nickname;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public ImageMatrix getProfilePhoto() {
+		return profilePhoto;
+	}
+
 	public void setAge(int age) {
 		this.age = Math.max(age, 0);
 	}
