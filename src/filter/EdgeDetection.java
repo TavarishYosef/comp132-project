@@ -9,6 +9,9 @@ public class EdgeDetection implements Filter {
 	private static final int[][] SOBEL_Y = { { -1, -2, -1 }, { 0, 0, 0 }, { 1, 2, 1 } };
 
 	public ImageMatrix apply(ImageMatrix image, int degree) {
+		if (degree == 0) {
+			return image;
+		}
 		int width = image.getWidth();
 		int height = image.getHeight();
 		ImageMatrix result = new ImageMatrix(width, height);
@@ -30,7 +33,14 @@ public class EdgeDetection implements Filter {
 
 				int edge = (int) Math.sqrt(xSum * xSum + ySum * ySum);
 				edge = Math.min(255, Math.max(0, edge));
-				result.setRGB(x, y, ImageMatrix.convertRGB(edge, edge, edge));
+				int red = image.getRed(x, y);
+				int green = image.getGreen(x, y);
+				int blue = image.getBlue(x, y);
+				
+				int finalRed = (edge*degree + red*(10 - degree))/10;
+				int finalGreen = (edge*degree + green*(10 - degree))/10;
+				int finalBlue = (edge*degree + blue*(10 - degree))/10;
+				result.setRGB(x, y, ImageMatrix.convertRGB(finalRed, finalGreen, finalBlue));
 			}
 		}
 

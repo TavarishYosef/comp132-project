@@ -18,6 +18,9 @@ public class BlurFilter implements Filter {
 	 */
 	public ImageMatrix apply(ImageMatrix image, int degree) {
 
+		if (degree <= 0) {
+			return image;
+		}
 		ImageMatrix result = new ImageMatrix(image.getWidth(), image.getHeight());
 
 		int area = 0;

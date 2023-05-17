@@ -9,10 +9,9 @@ import image.ImageMatrix;
 public class ContrastFilter implements Filter {
 	/**
 	 * Applies the contrast filter to the given ImageMatrix by modifying each
-	 * pixel's RGB values according to the formula:
-	 * color = factor * (color - 128) + 128 
-	 * where factor = (259 * (C + 255) / (255 * (259 - C) 
-	 * where C is the contrast multiplier
+	 * pixel's RGB values according to the formula: color = factor * (color - 128) +
+	 * 128 where factor = (259 * (C + 255) / (255 * (259 - C) where C is the
+	 * contrast multiplier
 	 * 
 	 * @param image  the image matrix to apply the filter to
 	 * @param degree degree of the filter between -10 and 10
@@ -20,6 +19,9 @@ public class ContrastFilter implements Filter {
 	 */
 	@Override
 	public ImageMatrix apply(ImageMatrix image, int degree) {
+		if (degree == 0) {
+			return image;
+		}
 
 		ImageMatrix result = new ImageMatrix(image.getWidth(), image.getHeight());
 
