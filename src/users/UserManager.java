@@ -23,9 +23,10 @@ public class UserManager {
 				String name = parts[2];
 				String surname = parts[3];
 				int age = Integer.parseInt(parts[4]);
-				String email = parts[5].strip();
+				String email = parts[5];
+				String profilePhoto = parts[6].strip();
 
-				addUser(new User(nickname, password, name, surname, age, email));
+				addUser(new User(nickname, password, name, surname, age, email, profilePhoto));
 			}
 		} catch (FileNotFoundException err) {
 			System.err.println("Error reading user file");
@@ -33,26 +34,6 @@ public class UserManager {
 		}
 	}
 
-	public HashMap<String, User> getUserMap() {
-		return users;
-	}
-
-	public void writeUser(User user) {
-		String nickname = user.getNickname();
-		String password = user.getPassword();
-		String name = user.getName();
-		String surname = user.getSurname();
-		int age = user.getAge();
-		String email = user.getEmail();
-		
-		try (FileWriter writer = new FileWriter("users.txt", true)) {
-			writer.write(nickname.toLowerCase() + "," + password + "," + name + "," + surname + "," + age + "," + email + "\n");
-		} catch (IOException err) {
-			System.err.println("Error saving user to users.txt");
-			err.printStackTrace();
-		}
-
-	}
 	public void addUser(User user) {
 		String nickname = user.getNickname();
 		String email = user.getEmail();
@@ -60,10 +41,6 @@ public class UserManager {
 		users.put(nickname.toLowerCase(), user);
 		nicknames.add(nickname.toLowerCase());
 		emails.add(email.toLowerCase());
-	}
-
-	public User getUser(String nickname) {
-		return users.get(nickname);
 	}
 
 	public boolean checkEmail(String email) {
@@ -74,12 +51,41 @@ public class UserManager {
 		return !nicknames.contains(nickname.toLowerCase());
 	}
 
+	public User getUser(String nickname) {
+		return users.get(nickname.toLowerCase());
+	}
+
+	public HashMap<String, User> getUserMap() {
+		return users;
+	}
+
 	public boolean validateUser(String nickname, String password) {
 		for (User user : users.values()) {
-			if (user.getNickname().toLowerCase().equals(nickname.toLowerCase()) && user.getPassword().equals(password)) {
+			System.out.println(user);
+			if (user.getNickname().toLowerCase().equals(nickname.toLowerCase())
+					&& user.getPassword().equals(password)) {
 				return true;
 			}
 		}
 		return false;
+	}
+
+	public void writeUser(User user) {
+		String nickname = user.getNickname();
+		String password = user.getPassword();
+		String name = user.getName();
+		String surname = user.getSurname();
+		int age = user.getAge();
+		String email = user.getEmail();
+		String profilePhoto = user.getProfilePhoto();
+
+		try (FileWriter writer = new FileWriter("users.txt", true)) {
+			writer.write(nickname.toLowerCase() + "," + password + "," + name + "," + surname + "," + age + "," + email
+					+ "," + profilePhoto + "\n");
+		} catch (IOException err) {
+			System.err.println("Error saving user to users.txt");
+			err.printStackTrace();
+		}
+
 	}
 }

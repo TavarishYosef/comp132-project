@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -13,6 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import image.ImageMatrix;
+import image.ImageSecretary;
+import users.User;
+import users.UserManager;
 
 @SuppressWarnings("serial")
 public class PhotoGridCell extends JPanel {
@@ -20,6 +24,7 @@ public class PhotoGridCell extends JPanel {
 	public PhotoGridCell(ImageMatrix image, String imageName, String nickname) {
 		setLayout(new BorderLayout());
 		setPreferredSize(new Dimension(160, 200)); // Set preferred size
+		UserManager userManager = new UserManager();
 
 		// thumbnail label
 		ImageIcon thumbnailImage = new ImageIcon(
@@ -29,10 +34,20 @@ public class PhotoGridCell extends JPanel {
 		add(thumbnailLabel, BorderLayout.CENTER);
 
 		// nickname label
+		User user = userManager.getUser(nickname);
+		ImageIcon profilePhoto = new ImageIcon();
+		try {
+			profilePhoto = new ImageIcon(ImageSecretary.readResourceImage(user.getProfilePhoto(), ".png").getBufferedImage().getScaledInstance(30, 30, Image.SCALE_FAST));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		JPanel userPanel = new JPanel();
+		JLabel photoLabel = new JLabel(profilePhoto);
 		JLabel nicknameLabel = new JLabel(nickname);
+		userPanel.add(photoLabel);
+		userPanel.add(nicknameLabel);
 		nicknameLabel.setBorder(new EmptyBorder(5, 0, 0, 0));
-		add(nicknameLabel, BorderLayout.SOUTH);
-		
+		add(userPanel, BorderLayout.SOUTH);
 		setBackground(Color.LIGHT_GRAY);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -45,7 +60,7 @@ public class PhotoGridCell extends JPanel {
 		});
 		
 		// Add a mouse listener to open profile page
-		nicknameLabel.addMouseListener(new MouseAdapter() {
+		userPanel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("Clicked user " + nickname);

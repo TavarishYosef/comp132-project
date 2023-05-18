@@ -12,10 +12,16 @@ import javax.swing.JScrollPane;
 
 import image.ImageSecretary;
 import users.User;
+import users.UserManager;
 
 @SuppressWarnings("serial")
 public class DiscoverPage extends JFrame {
 
+	public static void main(String[] args) {
+		UserManager userManager = new UserManager();
+		DiscoverPage discoverPage = new DiscoverPage(userManager.getUser("tavarishyosef"));
+		discoverPage.setVisible(true);
+	}
 	public DiscoverPage(User user) {
 		setTitle("Discover Page");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

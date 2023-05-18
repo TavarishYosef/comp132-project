@@ -10,7 +10,7 @@ public class User {
 	private String surname;
 	private int age;
 	private String email; // unique email
-	private ImageMatrix profilePhoto; // optional pfp
+	private String profilePhoto; // optional pfp
 
 	public User(String nickname, String password, String name, String surname, int age, String email) {
 		this.nickname = nickname;
@@ -19,11 +19,11 @@ public class User {
 		this.surname = surname;
 		this.age = age;
 		this.email = email;
-		this.profilePhoto = new ImageMatrix(320, 320);
+		this.profilePhoto = "default_user";
 	}
 
 	public User(String nickname, String password, String name, String surname, int age, String email,
-			ImageMatrix profilePhoto) {
+			String profilePhoto) {
 		this.nickname = nickname;
 		this.password = password;
 		this.name = name;
@@ -58,7 +58,7 @@ public class User {
 		return age;
 	}
 
-	public ImageMatrix getProfilePhoto() {
+	public String getProfilePhoto() {
 		return profilePhoto;
 	}
 
@@ -78,7 +78,7 @@ public class User {
 		this.password = password;
 	}
 
-	public void setProfilePhoto(ImageMatrix profilePhoto) {
+	public void setProfilePhoto(String profilePhoto) {
 		this.profilePhoto = profilePhoto;
 	}
 
