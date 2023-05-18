@@ -24,12 +24,11 @@ public class ImageSecretary {
 	 * Reads the image from your resources.
 	 * 
 	 * @param imName    name of the file
-	 * @param extension of the file
 	 * @return new ImageMatrix
 	 * @throws IOException
 	 */
-	public static ImageMatrix readResourceImage(String imName, String extension) throws IOException {
-		return new ImageMatrix(ImageIO.read(new File(IMAGE_LOCATION + imName + extension)));
+	public static ImageMatrix readResourceImage(String imName) throws IOException {
+		return new ImageMatrix(ImageIO.read(new File(IMAGE_LOCATION + imName)));
 	}
 
 	/**
@@ -37,11 +36,10 @@ public class ImageSecretary {
 	 * 
 	 * @param image     rendered image
 	 * @param name      of the file
-	 * @param extension of the file
 	 * @return
 	 */
-	public static boolean writeFilteredImageToResources(ImageMatrix image, String name, String extension) {
-		return writeImageToResources(image.getBufferedImage(), name, extension);
+	public static boolean writeFilteredImageToResources(ImageMatrix image, String name) {
+		return writeImageToResources(image.getBufferedImage(), name);
 	}
 
 	public static List<String> getRawImageNames() {
@@ -63,10 +61,10 @@ public class ImageSecretary {
 	 * @param name
 	 * @return
 	 */
-	private static boolean writeImageToResources(RenderedImage image, String name, String extension) {
+	private static boolean writeImageToResources(RenderedImage image, String name) {
 		boolean result = true;
 		try {
-			ImageIO.write(image, "jpg", new File(IMAGE_LOCATION + name + extension));
+			ImageIO.write(image, "jpg", new File(IMAGE_LOCATION + name));
 		} catch (IOException e) {
 			e.printStackTrace();
 			result = false;

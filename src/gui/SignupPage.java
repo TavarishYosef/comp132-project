@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 
 import users.User;
 import users.UserManager;
+import users.UserTier;
 
 @SuppressWarnings("serial")
 public class SignupPage extends JFrame {
@@ -296,7 +297,7 @@ public class SignupPage extends JFrame {
 				}
 
 				if (valid) {
-					User user = new User(nickname, password, name, surname, Integer.parseInt(age), email);
+					User user = new User(nickname, password, name, surname, Integer.parseInt(age), email, UserTier.FREE);
 					userManager.addUser(user);
 					userManager.writeUser(user);
 					setVisible(false);

@@ -11,8 +11,9 @@ public class User {
 	private int age;
 	private String email; // unique email
 	private String profilePhoto; // optional pfp
+	private UserTier userTier;
 
-	public User(String nickname, String password, String name, String surname, int age, String email) {
+	public User(String nickname, String password, String name, String surname, int age, String email, UserTier userTier) {
 		this.nickname = nickname;
 		this.password = password;
 		this.name = name;
@@ -20,10 +21,11 @@ public class User {
 		this.age = age;
 		this.email = email;
 		this.profilePhoto = "default_user";
+		this.userTier = userTier;
 	}
 
 	public User(String nickname, String password, String name, String surname, int age, String email,
-			String profilePhoto) {
+			String profilePhoto, UserTier userTier) {
 		this.nickname = nickname;
 		this.password = password;
 		this.name = name;
@@ -31,6 +33,7 @@ public class User {
 		this.age = age;
 		this.email = email;
 		this.profilePhoto = profilePhoto;
+		this.userTier = userTier;
 	}
 
 	// getters and setters
@@ -80,6 +83,12 @@ public class User {
 
 	public void setProfilePhoto(String profilePhoto) {
 		this.profilePhoto = profilePhoto;
+	}
+
+	@Override
+	public String toString() {
+		return "User [nickname=" + nickname + ", password=" + password + ", name=" + name + ", surname=" + surname
+				+ ", age=" + age + ", email=" + email + ", profilePhoto=" + profilePhoto + "]";
 	}
 
 	public void setSurname(String surname) {

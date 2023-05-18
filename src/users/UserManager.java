@@ -12,6 +12,7 @@ public class UserManager {
 	private static HashMap<String, User> users = new HashMap<>();
 	private static ArrayList<String> nicknames = new ArrayList<>();
 	private static ArrayList<String> emails = new ArrayList<>();
+	private static HashMap<String, String> posts = new HashMap<>();
 
 	public UserManager() {
 		try (Scanner scanner = new Scanner(new File("users.txt"))) {
@@ -24,13 +25,30 @@ public class UserManager {
 				String surname = parts[3];
 				int age = Integer.parseInt(parts[4]);
 				String email = parts[5];
-				String profilePhoto = parts[6].strip();
+				String profilePhoto = parts[6];
+				String tier = parts[7].strip();
+				UserTier userTier = UserTier.FREE;
+				if (tier.equals("HOBBYIST")) {
+					userTier = UserTier.HOBBYIST;
+				} else if (tier.equals("PROFFESSIONAL")) 
+					userTier = UserTier.PROFESSIONAL;
 
-				addUser(new User(nickname, password, name, surname, age, email, profilePhoto));
+				addUser(new User(nickname, password, name, surname, age, email, profilePhoto, userTier));
 			}
 		} catch (FileNotFoundException err) {
 			System.err.println("Error reading user file");
 			err.printStackTrace();
+		}
+		try (Scanner scanner = new Scanner(new File("posts.txt"))) {
+			while (scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+				String[] parts = line.split(",");
+				String post = parts[0];
+				String nickname = parts[1];
+				posts.put(post, nickname);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 	}
 
@@ -42,13 +60,16 @@ public class UserManager {
 		nicknames.add(nickname.toLowerCase());
 		emails.add(email.toLowerCase());
 	}
-
 	public boolean checkEmail(String email) {
 		return !emails.contains(email.toLowerCase());
 	}
 
 	public boolean checkNickname(String nickname) {
 		return !nicknames.contains(nickname.toLowerCase());
+	}
+
+	public String getOP(String postName) {
+		return posts.get(postName);
 	}
 
 	public User getUser(String nickname) {
@@ -58,10 +79,11 @@ public class UserManager {
 	public HashMap<String, User> getUserMap() {
 		return users;
 	}
-
+	public HashMap<String, String> getPostMap() {
+		return posts;
+	}
 	public boolean validateUser(String nickname, String password) {
 		for (User user : users.values()) {
-			System.out.println(user);
 			if (user.getNickname().toLowerCase().equals(nickname.toLowerCase())
 					&& user.getPassword().equals(password)) {
 				return true;

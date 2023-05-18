@@ -2,7 +2,6 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -58,8 +57,8 @@ public class LoginPage extends JFrame {
 
 				if (userManager.validateUser(nickname, password)) {
 					setVisible(false);
-					DiscoverPage discoverPage = new DiscoverPage(userManager.getUser(nickname));
-					discoverPage.setVisible(true);
+					MainFrame mainFrame = new MainFrame();
+					mainFrame.setVisible(true);
 					dispose();
 				} else {
 					errorLabel.setText("Invalid nickname and password");

@@ -33,13 +33,15 @@ public class PhotoGridCell extends JPanel {
 		thumbnailLabel.setSize(new Dimension(100, 100));
 		add(thumbnailLabel, BorderLayout.CENTER);
 
-		// nickname label
+
+		// User profile photo and nickname are displayed on userPanel
 		User user = userManager.getUser(nickname);
 		ImageIcon profilePhoto = new ImageIcon();
 		try {
-			profilePhoto = new ImageIcon(ImageSecretary.readResourceImage(user.getProfilePhoto(), ".png").getBufferedImage().getScaledInstance(30, 30, Image.SCALE_FAST));
+			profilePhoto = new ImageIcon(ImageSecretary.readResourceImage(user.getProfilePhoto()).getBufferedImage()
+					.getScaledInstance(30, 30, Image.SCALE_FAST));
 		} catch (IOException e) {
-			e.printStackTrace();
+			profilePhoto = new ImageIcon();
 		}
 		JPanel userPanel = new JPanel();
 		JLabel photoLabel = new JLabel(profilePhoto);
@@ -58,7 +60,7 @@ public class PhotoGridCell extends JPanel {
 				System.out.println("Clicked on photo " + imageName);
 			}
 		});
-		
+
 		// Add a mouse listener to open profile page
 		userPanel.addMouseListener(new MouseAdapter() {
 			@Override
