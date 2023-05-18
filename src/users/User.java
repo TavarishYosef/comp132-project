@@ -1,8 +1,5 @@
 package users;
 
-import image.ImageMatrix;
-
-@SuppressWarnings("unused")
 public class User {
 	private String nickname; // unique nickname
 	private String password;
@@ -12,17 +9,6 @@ public class User {
 	private String email; // unique email
 	private String profilePhoto; // optional pfp
 	private UserTier userTier;
-
-	public User(String nickname, String password, String name, String surname, int age, String email, UserTier userTier) {
-		this.nickname = nickname;
-		this.password = password;
-		this.name = name;
-		this.surname = surname;
-		this.age = age;
-		this.email = email;
-		this.profilePhoto = "default_user";
-		this.userTier = userTier;
-	}
 
 	public User(String nickname, String password, String name, String surname, int age, String email,
 			String profilePhoto, UserTier userTier) {
@@ -36,33 +22,53 @@ public class User {
 		this.userTier = userTier;
 	}
 
-	// getters and setters
-	public String getNickname() {
-		return nickname;
+	public User(String nickname, String password, String name, String surname, int age, String email,
+			UserTier userTier) {
+		this.nickname = nickname;
+		this.password = password;
+		this.name = name;
+		this.surname = surname;
+		this.age = age;
+		this.email = email;
+		this.profilePhoto = "default_user.png";
+		this.userTier = userTier;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getSurname() {
-		return surname;
+	public boolean equals(User other) {
+		return nickname.equals(other.getNickname());
 	}
 
 	public int getAge() {
 		return age;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	// getters and setters
+	public String getNickname() {
+		return nickname;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
 	public String getProfilePhoto() {
 		return profilePhoto;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public UserTier getUserTier() {
+		return userTier;
 	}
 
 	public void setAge(int age) {
@@ -85,14 +91,13 @@ public class User {
 		this.profilePhoto = profilePhoto;
 	}
 
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
 	@Override
 	public String toString() {
 		return "User [nickname=" + nickname + ", password=" + password + ", name=" + name + ", surname=" + surname
 				+ ", age=" + age + ", email=" + email + ", profilePhoto=" + profilePhoto + "]";
 	}
-
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-
 }

@@ -8,7 +8,7 @@ import users.User;
 public class ProfilePage extends JPanel {
 
 	public ProfilePage(User user) {
-		setSize(600, 300);
 
+		
 	}
 }

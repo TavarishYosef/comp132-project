@@ -57,7 +57,7 @@ public class LoginPage extends JFrame {
 
 				if (userManager.validateUser(nickname, password)) {
 					setVisible(false);
-					MainFrame mainFrame = new MainFrame();
+					MainFrame mainFrame = new MainFrame(userManager.getUser(nickname));
 					mainFrame.setVisible(true);
 					dispose();
 				} else {

@@ -30,9 +30,11 @@ public class UserManager {
 				UserTier userTier = UserTier.FREE;
 				if (tier.equals("HOBBYIST")) {
 					userTier = UserTier.HOBBYIST;
-				} else if (tier.equals("PROFFESSIONAL")) 
+				} else if (tier.equals("PROFESSIONAL")) {
 					userTier = UserTier.PROFESSIONAL;
-
+				} else if (tier.equals("ADMIN")) {
+					userTier = UserTier.ADMIN;
+				}
 				addUser(new User(nickname, password, name, surname, age, email, profilePhoto, userTier));
 			}
 		} catch (FileNotFoundException err) {
@@ -48,7 +50,6 @@ public class UserManager {
 				posts.put(post, nickname);
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 	}
 
@@ -60,6 +61,7 @@ public class UserManager {
 		nicknames.add(nickname.toLowerCase());
 		emails.add(email.toLowerCase());
 	}
+
 	public boolean checkEmail(String email) {
 		return !emails.contains(email.toLowerCase());
 	}
@@ -76,12 +78,27 @@ public class UserManager {
 		return users.get(nickname.toLowerCase());
 	}
 
+	public void addPost(String fileName, String nickName) {
+		posts.put(fileName, nickName);
+	}
+
+	public void writePost(String fileName, String nickName) {
+		try (FileWriter writer = new FileWriter("posts.txt", true)) {
+			writer.write(fileName + "," + nickName + "\n");
+		} catch (IOException err) {
+			System.err.println("Error saving user to users.txt");
+			err.printStackTrace();
+		}
+	}
+
 	public HashMap<String, User> getUserMap() {
 		return users;
 	}
+
 	public HashMap<String, String> getPostMap() {
 		return posts;
 	}
+
 	public boolean validateUser(String nickname, String password) {
 		for (User user : users.values()) {
 			if (user.getNickname().toLowerCase().equals(nickname.toLowerCase())
@@ -92,6 +109,28 @@ public class UserManager {
 		return false;
 	}
 
+	public void updateUsers() {
+		new File("users.txt").delete();
+		for (User user : users.values()) {
+			String nickname = user.getNickname();
+			String password = user.getPassword();
+			String name = user.getName();
+			String surname = user.getSurname();
+			int age = user.getAge();
+			String email = user.getEmail();
+			String profilePhoto = user.getProfilePhoto();
+			UserTier tier = user.getUserTier();
+
+			try (FileWriter writer = new FileWriter("users.txt", true)) {
+				writer.write(nickname.toLowerCase() + "," + password + "," + name + "," + surname + "," + age + ","
+						+ email + "," + profilePhoto + "," + tier + "\n");
+			} catch (IOException err) {
+				System.err.println("Error saving user to users.txt");
+				err.printStackTrace();
+			}
+		}
+	}
+
 	public void writeUser(User user) {
 		String nickname = user.getNickname();
 		String password = user.getPassword();
@@ -100,10 +139,11 @@ public class UserManager {
 		int age = user.getAge();
 		String email = user.getEmail();
 		String profilePhoto = user.getProfilePhoto();
+		UserTier tier = user.getUserTier();
 
 		try (FileWriter writer = new FileWriter("users.txt", true)) {
 			writer.write(nickname.toLowerCase() + "," + password + "," + name + "," + surname + "," + age + "," + email
-					+ "," + profilePhoto + "\n");
+					+ "," + profilePhoto + "," + tier + "\n");
 		} catch (IOException err) {
 			System.err.println("Error saving user to users.txt");
 			err.printStackTrace();

@@ -301,8 +301,8 @@ public class SignupPage extends JFrame {
 					userManager.addUser(user);
 					userManager.writeUser(user);
 					setVisible(false);
-					ProfilePage profilePage = new ProfilePage(user);
-					profilePage.setVisible(true);
+					MainFrame mainFrame = new MainFrame(user);
+					mainFrame.setVisible(true);
 					dispose();
 				}
 			}

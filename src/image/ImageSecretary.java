@@ -32,7 +32,7 @@ public class ImageSecretary {
 	}
 
 	/**
-	 * Writes the rendered image to your resources with the given name and extension
+	 * Writes the rendered image to your resources with the given name
 	 * 
 	 * @param image     rendered image
 	 * @param name      of the file
@@ -55,7 +55,7 @@ public class ImageSecretary {
 	}
 
 	/**
-	 * Writes the rendered image to your resources with the given name as jpg
+	 * Writes the rendered image to your resources with the given name
 	 * 
 	 * @param image
 	 * @param name
