@@ -6,8 +6,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileWriter;
-import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -50,7 +48,7 @@ public class SignupPage extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(600, 300);
 		setLocationRelativeTo(null);
-        setTitle("PhotoCloud Signup Page");
+		setTitle("PhotoCloud Signup Page");
 		setResizable(false);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -250,10 +248,12 @@ public class SignupPage extends JFrame {
 				name = name.strip();
 				surname = surname.strip();
 				if (name.equals("")) {
+					valid = false;
 					nameErrorLabel.setText("Please enter your name.");
 				}
-				
+
 				if (surname.equals("")) {
+					valid = false;
 					surnameErrorLabel.setText("Please enter your surname.");
 				}
 				// Validate age
@@ -269,19 +269,19 @@ public class SignupPage extends JFrame {
 				}
 
 				// Validate email
-				if (!email.matches("\\w+@.+\\..+")) {
+				if (!email.matches("\\w+@.+\\..+")) { // Is email in the form user@mail.com
 					emailErrorLabel.setText("Please enter a valid email");
 					valid = false;
-				} else if (!userManager.checkEmail(email)) {
+				} else if (!userManager.checkEmail(email)) { // Is email taken
 					emailErrorLabel.setText("Email taken");
 					valid = false;
 				}
 
 				// Validate nickname
-				if (!nickname.matches("\\w+")) {
+				if (!nickname.matches("\\w+")) { // Is nickname alphanumeric
 					nicknameErrorLabel.setText("Please enter a valid nickname");
 					valid = false;
-				} else if (!userManager.checkNickname(nickname)) {
+				} else if (!userManager.checkNickname(nickname)) { // Is nickname already taken
 					nicknameErrorLabel.setText("Username taken");
 					valid = false;
 				}
@@ -298,15 +298,9 @@ public class SignupPage extends JFrame {
 				if (valid) {
 					User user = new User(nickname, password, name, surname, Integer.parseInt(age), email);
 					userManager.addUser(user);
-					try (FileWriter writer = new FileWriter("users.txt", true)) {
-						writer.write(nickname.toLowerCase() + "," + password + "," + name + "," + surname + "," + age + "," + email + "\n");
-					} catch (IOException err) {
-						System.err.println("Error saving user to users.txt");
-						err.printStackTrace();
-					}
-
+					userManager.writeUser(user);
 					setVisible(false);
-					ProfilePage profilePage = new ProfilePage();
+					ProfilePage profilePage = new ProfilePage(user);
 					profilePage.setVisible(true);
 					dispose();
 				}

@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import gui.ProfilePage;
-
 public class UserManager {
 	private static HashMap<String, User> users = new HashMap<>();
 	private static ArrayList<String> nicknames = new ArrayList<>();
@@ -35,11 +33,11 @@ public class UserManager {
 		}
 	}
 
-	public HashMap<String, User> getUsers() {
-		return this.users;
+	public HashMap<String, User> getUserMap() {
+		return users;
 	}
 
-	public void addUser(User user) {
+	public void writeUser(User user) {
 		String nickname = user.getNickname();
 		String password = user.getPassword();
 		String name = user.getName();
@@ -47,15 +45,41 @@ public class UserManager {
 		int age = user.getAge();
 		String email = user.getEmail();
 		
+		try (FileWriter writer = new FileWriter("users.txt", true)) {
+			writer.write(nickname.toLowerCase() + "," + password + "," + name + "," + surname + "," + age + "," + email + "\n");
+		} catch (IOException err) {
+			System.err.println("Error saving user to users.txt");
+			err.printStackTrace();
+		}
+
+	}
+	public void addUser(User user) {
+		String nickname = user.getNickname();
+		String email = user.getEmail();
+
 		users.put(nickname.toLowerCase(), user);
 		nicknames.add(nickname.toLowerCase());
 		emails.add(email.toLowerCase());
 	}
 
+	public User getUser(String nickname) {
+		return users.get(nickname);
+	}
+
 	public boolean checkEmail(String email) {
 		return !emails.contains(email.toLowerCase());
 	}
+
 	public boolean checkNickname(String nickname) {
 		return !nicknames.contains(nickname.toLowerCase());
+	}
+
+	public boolean validateUser(String nickname, String password) {
+		for (User user : users.values()) {
+			if (user.getNickname().toLowerCase().equals(nickname.toLowerCase()) && user.getPassword().equals(password)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

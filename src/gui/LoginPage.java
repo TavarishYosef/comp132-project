@@ -2,12 +2,10 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,6 +13,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import users.UserManager;
 
 @SuppressWarnings("serial")
 public class LoginPage extends JFrame {
@@ -29,6 +30,8 @@ public class LoginPage extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(false);
+		JPanel contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		// Create the nickname label and text field
 		JLabel nicknameLabel = new JLabel("Nickname:");
@@ -48,27 +51,14 @@ public class LoginPage extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// Validate the user and navigate to the discover page
+				UserManager userManager = new UserManager();
 				String nickname = nicknameField.getText();
 				@SuppressWarnings("deprecation")
 				String password = passwordField.getText();
-				boolean isValid = false;
 
-				try (Scanner scanner = new Scanner(new File("users.txt"))) {
-					while (scanner.hasNextLine()) {
-						String line = scanner.nextLine();
-						String[] parts = line.split(",");
-						if (parts[0].toLowerCase().equals(nickname.toLowerCase()) && parts[1].equals(password)) {
-							isValid = true;
-							break;
-						}
-					}
-				} catch (FileNotFoundException err) {
-					System.err.println("Error reading user file");
-					err.printStackTrace();
-				}
-				if (isValid) {
+				if (userManager.validateUser(nickname, password)) {
 					setVisible(false);
-					DiscoverPage discoverPage = new DiscoverPage();
+					DiscoverPage discoverPage = new DiscoverPage(userManager.getUser(nickname));
 					discoverPage.setVisible(true);
 					dispose();
 				} else {
@@ -96,10 +86,12 @@ public class LoginPage extends JFrame {
 		nicknamePanel.add(nicknameLabel);
 		nicknamePanel.add(nicknameField);
 
-		JPanel passwordPanel = new JPanel();
-		passwordPanel.add(passwordLabel);
-		passwordPanel.add(passwordField);
-		passwordPanel.add(errorLabel);
+		JPanel passwordPanel = new JPanel(new BorderLayout());
+		JPanel passPanel = new JPanel();
+		passPanel.add(passwordLabel);
+		passPanel.add(passwordField);
+		passwordPanel.add(passPanel);
+		passwordPanel.add(errorLabel, BorderLayout.SOUTH);
 
 		JPanel buttonContainer = new JPanel(new GridLayout(1, 3));
 		JPanel buttonsPanel = new JPanel(new GridLayout(4, 1));
@@ -111,9 +103,10 @@ public class LoginPage extends JFrame {
 		buttonContainer.add(buttonsPanel);
 		buttonContainer.add(new JPanel());
 		// Add the components to the JFrame
-		add(nicknamePanel, BorderLayout.NORTH);
-		add(passwordPanel, BorderLayout.CENTER);
-		add(buttonContainer, BorderLayout.SOUTH);
+		contentPane.add(nicknamePanel, BorderLayout.NORTH);
+		contentPane.add(passwordPanel, BorderLayout.CENTER);
+		contentPane.add(buttonContainer, BorderLayout.SOUTH);
+		setContentPane(contentPane);
 	}
 
 }
