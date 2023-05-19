@@ -9,19 +9,30 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import image.ImageMatrix;
 import image.ImageSecretary;
+import users.Post;
 import users.User;
 import users.UserManager;
 
 @SuppressWarnings("serial")
 public class PhotoGridCell extends JPanel {
 
-	public PhotoGridCell(ImageMatrix image, String imageName, String nickname) {
+	public PhotoGridCell(Post post) {
+		String imageName = post.getImageName();
+		ImageMatrix image = new ImageMatrix(150, 150);
+		try {
+			image = ImageSecretary.readResourceImage(imageName);
+		} catch (IOException e) {
+			System.err.println("Image" + imageName + "does not exist");
+		}
+		User poster = post.getPoster();
+		String nickname = poster.getNickname();
 		setLayout(new BorderLayout());
 		setPreferredSize(new Dimension(160, 200)); // Set preferred size
 		UserManager userManager = new UserManager();
@@ -32,7 +43,6 @@ public class PhotoGridCell extends JPanel {
 		JLabel thumbnailLabel = new JLabel(thumbnailImage);
 		thumbnailLabel.setSize(new Dimension(100, 100));
 		add(thumbnailLabel, BorderLayout.CENTER);
-
 
 		// User profile photo and nickname are displayed on userPanel
 		User user = userManager.getUser(nickname);
@@ -57,7 +67,7 @@ public class PhotoGridCell extends JPanel {
 		thumbnailLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("Clicked on photo " + imageName);
+				System.out.println("Clicked on post ID: " + post.getId());
 			}
 		});
 
@@ -65,7 +75,13 @@ public class PhotoGridCell extends JPanel {
 		userPanel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("Clicked user " + nickname);
+				JFrame frame = new JFrame(user.getNickname() + "'s Profile");
+				PublicProfilePage profilePage = new PublicProfilePage(user);
+				frame.add(profilePage);
+				frame.setSize(700, 600);
+				frame.setResizable(false);
+				frame.setLocationRelativeTo(null);
+				frame.setVisible(true);
 			}
 		});
 	}

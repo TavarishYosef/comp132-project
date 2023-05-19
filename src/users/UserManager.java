@@ -6,13 +6,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 public class UserManager {
 	private static HashMap<String, User> users = new HashMap<>();
 	private static ArrayList<String> nicknames = new ArrayList<>();
 	private static ArrayList<String> emails = new ArrayList<>();
-	private static HashMap<String, String> posts = new HashMap<>();
+	private static HashMap<Integer, Post> posts = new HashMap<>();
 
 	public UserManager() {
 		try (Scanner scanner = new Scanner(new File("users.txt"))) {
@@ -45,9 +46,15 @@ public class UserManager {
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
 				String[] parts = line.split(",");
-				String post = parts[0];
-				String nickname = parts[1];
-				posts.put(post, nickname);
+				int id = Integer.parseInt(parts[0]);
+				String status = parts[1];
+				String imageName = parts[2];
+				String nickname = parts[3];
+				String description = parts[4].strip();
+				Post post = new Post(id, imageName, getUser(nickname), description);
+				if (status.equals("public"))
+					post.setPublic(true);
+				posts.put(id, post);
 			}
 		} catch (Exception e) {
 		}
@@ -70,23 +77,33 @@ public class UserManager {
 		return !nicknames.contains(nickname.toLowerCase());
 	}
 
-	public String getOP(String postName) {
-		return posts.get(postName);
-	}
-
 	public User getUser(String nickname) {
 		return users.get(nickname.toLowerCase());
 	}
 
-	public void addPost(String fileName, String nickName) {
-		posts.put(fileName, nickName);
+	public void addPost(int id, Post post) {
+		posts.put(id, post);
 	}
 
-	public void writePost(String fileName, String nickName) {
+	public ArrayList<Post> getPostsByUser(User user) {
+		ArrayList<Post> result = new ArrayList<>();
+		for (Post post : posts.values()) {
+			if (post.getPoster().equals(user)) {
+				result.add(post);
+			}
+		}
+		return result;
+	}
+	public void writePost(Post post) {
 		try (FileWriter writer = new FileWriter("posts.txt", true)) {
-			writer.write(fileName + "," + nickName + "\n");
+			int id = post.getId();
+			String status = post.isPublic() ? "public" : "private";
+			String imageName = post.getImageName();
+			String poster = post.getPoster().getNickname();
+			String description = post.getDescription();
+			writer.write(id + "," + status + "," + imageName + "," + poster + "," + description + "\n");
 		} catch (IOException err) {
-			System.err.println("Error saving user to users.txt");
+			System.err.println("Error saving post to posts.txt");
 			err.printStackTrace();
 		}
 	}
@@ -95,7 +112,7 @@ public class UserManager {
 		return users;
 	}
 
-	public HashMap<String, String> getPostMap() {
+	public HashMap<Integer, Post> getPostMap() {
 		return posts;
 	}
 
@@ -122,7 +139,7 @@ public class UserManager {
 			UserTier tier = user.getUserTier();
 
 			try (FileWriter writer = new FileWriter("users.txt", true)) {
-				writer.write(nickname.toLowerCase() + "," + password + "," + name + "," + surname + "," + age + ","
+				writer.write(nickname + "," + password + "," + name + "," + surname + "," + age + ","
 						+ email + "," + profilePhoto + "," + tier + "\n");
 			} catch (IOException err) {
 				System.err.println("Error saving user to users.txt");

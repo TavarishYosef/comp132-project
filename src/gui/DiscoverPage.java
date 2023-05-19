@@ -2,14 +2,13 @@ package gui;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.io.IOException;
 import java.util.HashMap;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-import image.ImageSecretary;
+import users.Post;
 import users.User;
 import users.UserManager;
 
@@ -21,16 +20,12 @@ public class DiscoverPage extends JScrollPane {
 		setPreferredSize(new Dimension(800, 0));
 		UserManager userManager = new UserManager();
 
-		HashMap<String, String> images = userManager.getPostMap();
-		int imageCount = images.size();
-		for (String imageName : images.keySet()) {
-			try {
-				PhotoGridCell photoGridCell = new PhotoGridCell(ImageSecretary.readResourceImage(imageName), imageName,
-						userManager.getOP(imageName));
+		HashMap<Integer, Post> posts = userManager.getPostMap();
+		for (Post post : posts.values()) {
+			if (post.isPublic()) {
+				PhotoGridCell photoGridCell = new PhotoGridCell(post);
 				photoGridCell.setPreferredSize(new Dimension(160, 200));
 				gridPanel.add(photoGridCell);
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
 		}
 
@@ -41,20 +36,18 @@ public class DiscoverPage extends JScrollPane {
 		setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		getVerticalScrollBar().setUnitIncrement(20);
 	}
+
 	public void refresh() {
 		JPanel gridPanel = new JPanel(new GridLayout(0, 4, 5, 20));
-		setPreferredSize(new Dimension(800, 800));
+		setPreferredSize(new Dimension(800, 0));
 		UserManager userManager = new UserManager();
 
-		HashMap<String, String> images = userManager.getPostMap();
-		for (String imageName : images.keySet()) {
-			try {
-				PhotoGridCell photoGridCell = new PhotoGridCell(ImageSecretary.readResourceImage(imageName), imageName,
-						userManager.getOP(imageName));
+		HashMap<Integer, Post> posts = userManager.getPostMap();
+		for (Post post : posts.values()) {
+			if (post.isPublic()) {
+				PhotoGridCell photoGridCell = new PhotoGridCell(post);
 				photoGridCell.setPreferredSize(new Dimension(160, 200));
 				gridPanel.add(photoGridCell);
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
 		}
 

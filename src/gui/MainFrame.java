@@ -5,15 +5,12 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import users.User;
 import users.UserManager;
@@ -23,7 +20,6 @@ public class MainFrame extends JFrame {
 
 	public static void main(String[] args) {
 		UserManager userManager = new UserManager();
-		userManager.updateUsers();
 		MainFrame mainFrame = new MainFrame(userManager.getUser("tavarishyosef"));
 		mainFrame.setVisible(true);
 	}
@@ -32,6 +28,7 @@ public class MainFrame extends JFrame {
 
 	public MainFrame(User user) {
 		UserManager userManager = new UserManager();
+		setTitle("PhotoCloud");
 		setSize(950, 600);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,7 +45,6 @@ public class MainFrame extends JFrame {
 
 		// The different pages
 		DiscoverPage discoverPage = new DiscoverPage(userManager.getUser("tavarishyosef"));
-		ProfilePage profilePage = new ProfilePage(userManager.getUser("tavarishyosef"));
 
 		// Add the components
 		controlPanel.add(discoverButton);
@@ -62,11 +58,7 @@ public class MainFrame extends JFrame {
 		profileButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				displayedComponent.setVisible(false);
-				remove(displayedComponent);
-				add(profilePage, BorderLayout.EAST);
-				profilePage.setVisible(true);
-				displayedComponent = profilePage;
+
 			}
 		});
 
@@ -85,18 +77,8 @@ public class MainFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser chooser = new JFileChooser("./images");
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG, JPEG, PNG Images", "jpg", "png",
-						"jpeg");
-				chooser.setFileFilter(filter);
-				int returnVal = chooser.showOpenDialog(null);
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					File selectedFile = chooser.getSelectedFile();
-					userManager.addPost(selectedFile.getName(), user.getNickname());
-					userManager.writePost(selectedFile.getName(), user.getNickname());
-					discoverPage.refresh();
+				
 				}
-			}
 		});
 	}
 }
