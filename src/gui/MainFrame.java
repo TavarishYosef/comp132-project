@@ -2,7 +2,6 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -57,14 +56,13 @@ public class MainFrame extends JFrame {
 		add(controlPanel, BorderLayout.WEST);
 		add(discoverPage, BorderLayout.EAST);
 		displayedComponent = discoverPage;
-		
 
 		profileButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				displayedComponent.setVisible(false);
 				remove(displayedComponent);
-				add(privateProfilePage, BorderLayout.EAST);
+				add(privateProfilePage, BorderLayout.CENTER);
 				privateProfilePage.setVisible(true);
 				displayedComponent = privateProfilePage;
 				setSize(951, 600);
@@ -73,7 +71,6 @@ public class MainFrame extends JFrame {
 		});
 
 		discoverButton.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				displayedComponent.setVisible(false);
@@ -81,17 +78,16 @@ public class MainFrame extends JFrame {
 				add(discoverPage, BorderLayout.EAST);
 				discoverPage.setVisible(true);
 				displayedComponent = discoverPage;
+				discoverPage.refresh();
 			}
 		});
 		postButton.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
 			}
 		});
 		searchButton.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String input = JOptionPane.showInputDialog(searchButton,

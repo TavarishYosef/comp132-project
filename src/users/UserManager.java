@@ -6,7 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 
 public class UserManager {
@@ -124,6 +123,12 @@ public class UserManager {
 			}
 		}
 		return false;
+	}
+	public void removeUser(User user) {
+	    String nickname = user.getNickname().toLowerCase();
+	    users.remove(nickname);
+	    nicknames.remove(nickname);
+	    emails.remove(user.getEmail().toLowerCase());
 	}
 
 	public void updateUsers() {
