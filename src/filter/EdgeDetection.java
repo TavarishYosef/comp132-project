@@ -9,9 +9,10 @@ public class EdgeDetection implements Filter {
 	private static final int[][] SOBEL_Y = { { -1, -2, -1 }, { 0, 0, 0 }, { 1, 2, 1 } };
 
 	public ImageMatrix apply(ImageMatrix image, int degree) {
-		if (degree == 0) {
+		if (degree <= 0)
 			return image;
-		}
+		if (degree > 10)
+			degree = 10;
 		int width = image.getWidth();
 		int height = image.getHeight();
 		ImageMatrix result = new ImageMatrix(width, height);

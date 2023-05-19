@@ -16,9 +16,10 @@ public class BrightnessFilter implements Filter {
      * @return the modified image matrix
      */
     public ImageMatrix apply(ImageMatrix image, int degree) {
-		if (degree == 0) {
+		if (degree <= 0)
 			return image;
-		}
+		if (degree > 10)
+			degree = 10;
         ImageMatrix result = new ImageMatrix(image.getWidth(), image.getHeight());
 
         for (int x = 0; x < image.getWidth(); x++) {

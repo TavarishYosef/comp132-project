@@ -29,11 +29,12 @@ import users.User;
  * @author Yusuf
  *
  */
+@SuppressWarnings("serial")
 public class PhotoInteraction extends JDialog {
 	private JTextArea commentsArea;
 
 	public PhotoInteraction(Post post, User user) {
-
+		
 		setTitle("Photo Interaction");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setSize(1000, 800);
@@ -76,7 +77,8 @@ public class PhotoInteraction extends JDialog {
 		// Display comments section
 		commentsArea = new JTextArea();
 		commentsArea.setEditable(false);
-		commentsArea.setText("Comment");
+		Comment.readComments();
+		commentsArea.setText(post.getComments());
 
 		JScrollPane commentsScrollPane = new JScrollPane(commentsArea);
 		panel.add(commentsScrollPane, BorderLayout.EAST);
@@ -93,8 +95,9 @@ public class PhotoInteraction extends JDialog {
 				String commentText = commentField.getText();
 				if (!commentText.isEmpty()) {
 					Comment comment = new Comment(user, commentText, post);
+					comment.addComment();
 					comment.write();
-					updateCommentsArea();
+					commentsArea.setText(post.getComments());
 					commentField.setText("");
 				}
 			}
@@ -107,7 +110,4 @@ public class PhotoInteraction extends JDialog {
 		getContentPane().add(panel);
 	}
 
-	private void updateCommentsArea() {
-		commentsArea.setText("Comment");
-	}
 }
