@@ -1,5 +1,11 @@
 package users;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import image.ImageMatrix;
+import image.ImageSecretary;
+
 public class User {
 	private String nickname; // unique nickname
 	private String password;
@@ -93,6 +99,17 @@ public class User {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
+	}
+
+	public BufferedImage getProfilePhotoImage() {
+		BufferedImage profilePhoto = null;
+		try {
+			ImageMatrix profilePhotoImage = ImageSecretary.readResourceImage(getProfilePhoto());
+			profilePhoto = profilePhotoImage.getBufferedImage();
+		} catch (IOException e) {
+			System.err.println("Photo " + getProfilePhoto() + " not found");
+		}
+		return profilePhoto;
 	}
 
 	@Override

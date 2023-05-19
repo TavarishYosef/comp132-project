@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -45,6 +47,7 @@ public class MainFrame extends JFrame {
 
 		// The different pages
 		DiscoverPage discoverPage = new DiscoverPage(userManager.getUser("tavarishyosef"));
+		PrivateProfilePage privateProfilePage = new PrivateProfilePage(user);
 
 		// Add the components
 		controlPanel.add(discoverButton);
@@ -54,11 +57,18 @@ public class MainFrame extends JFrame {
 		add(controlPanel, BorderLayout.WEST);
 		add(discoverPage, BorderLayout.EAST);
 		displayedComponent = discoverPage;
+		
 
 		profileButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				displayedComponent.setVisible(false);
+				remove(displayedComponent);
+				add(privateProfilePage, BorderLayout.EAST);
+				privateProfilePage.setVisible(true);
+				displayedComponent = privateProfilePage;
+				setSize(951, 600);
+				setSize(950, 600);
 			}
 		});
 
@@ -77,8 +87,32 @@ public class MainFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
+			}
+		});
+		searchButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String input = JOptionPane.showInputDialog(searchButton,
+						"Enter the nickname of the user you want to search", "Search user",
+						JOptionPane.QUESTION_MESSAGE);
+				if (input == null) {
+					return;
 				}
+				User user = userManager.getUser(input);
+				if (user == null || input.toLowerCase().equals("admin")) {
+					JOptionPane.showMessageDialog(searchButton, "User not found", "Error", JOptionPane.ERROR_MESSAGE);
+				} else {
+					JFrame frame = new JFrame(user.getNickname() + "'s Profile");
+					PublicProfilePage profilePage = new PublicProfilePage(user);
+					frame.add(profilePage);
+					frame.setSize(700, 600);
+					frame.setResizable(false);
+					frame.setLocationRelativeTo(null);
+					frame.setVisible(true);
+				}
+			}
 		});
 	}
 }

@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -13,8 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-import image.ImageMatrix;
-import image.ImageSecretary;
 import users.Post;
 import users.User;
 import users.UserManager;
@@ -38,7 +35,7 @@ public class PublicProfilePage extends JPanel {
 		userInfoPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		// Display the user's profile photo
-		ImageIcon profilePhoto = getUserProfilePhoto(user);
+		ImageIcon profilePhoto = new ImageIcon(user.getProfilePhotoImage().getScaledInstance(180, 180, Image.SCALE_FAST));
 		JLabel profilePhotoLabel = new JLabel(profilePhoto);
 		userInfoPanel.add(profilePhotoLabel);
 
@@ -72,17 +69,5 @@ public class PublicProfilePage extends JPanel {
 			postsPanel.add(photoGridCell);
 			}
 		}
-	}
-	private ImageIcon getUserProfilePhoto(User user) {
-		ImageIcon profilePhoto = new ImageIcon();
-		try {
-			ImageMatrix profilePhotoImage = ImageSecretary.readResourceImage(user.getProfilePhoto());
-			Image scaledProfilePhoto = profilePhotoImage.getBufferedImage().getScaledInstance(200, 200,
-					Image.SCALE_FAST);
-			profilePhoto = new ImageIcon(scaledProfilePhoto);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return profilePhoto;
 	}
 }
