@@ -67,7 +67,8 @@ public class PhotoGridCell extends JPanel {
 		thumbnailLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("Clicked on post ID: " + post.getId());
+				PhotoInteraction photoInteraction = new PhotoInteraction(post);
+				photoInteraction.setVisible(true);
 			}
 		});
 

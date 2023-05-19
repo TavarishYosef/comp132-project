@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -21,15 +20,16 @@ import users.User;
 import users.UserManager;
 
 @SuppressWarnings("serial")
+/**
+ * PublicProfilePage shows the user's public information
+ * and lists the user's public posts
+ * @author Yusuf
+ *
+ */
 public class PublicProfilePage extends JPanel {
 
-	private User user;
-	private UserManager userManager;
-	private JPanel postsPanel;
-
 	public PublicProfilePage(User user) {
-		this.user = user;
-		this.userManager = new UserManager();
+		UserManager userManager = new UserManager();
 		setLayout(new BorderLayout());
 		setPreferredSize(new Dimension(800, 600));
 
@@ -56,7 +56,7 @@ public class PublicProfilePage extends JPanel {
 		add(userInfoPanel, BorderLayout.NORTH);
 
 		// Put posts in 4 column grid layout
-		postsPanel = new JPanel(new GridLayout(0, 4, 5, 20));
+		JPanel postsPanel = new JPanel(new GridLayout(0, 4, 5, 20));
 		JScrollPane scrollPane = new JScrollPane(postsPanel);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
