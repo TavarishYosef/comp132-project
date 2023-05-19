@@ -25,7 +25,7 @@ import users.UserManager;
  */
 public class PublicProfilePage extends JPanel {
 
-	public PublicProfilePage(User user) {
+	public PublicProfilePage(User user, User currentUser) {
 		UserManager userManager = new UserManager();
 		setLayout(new BorderLayout());
 		setPreferredSize(new Dimension(800, 600));
@@ -40,15 +40,17 @@ public class PublicProfilePage extends JPanel {
 		userInfoPanel.add(profilePhotoLabel);
 
 		// Display user's public information
-		JPanel publicInfoPanel = new JPanel(new GridLayout(4, 1));
+		JPanel publicInfoPanel = new JPanel(new GridLayout(5, 1));
 		JLabel nameLabel = new JLabel("Name: " + user.getName());
 		JLabel surnameLabel = new JLabel("Surname: " + user.getSurname());
 		JLabel nicknameLabel = new JLabel("Nickname: " + user.getNickname());
 		JLabel ageLabel = new JLabel("Age: " + user.getAge());
+		JLabel tierLabel = new JLabel("Tier: " + user.getUserTier());
 		publicInfoPanel.add(nameLabel);
 		publicInfoPanel.add(surnameLabel);
 		publicInfoPanel.add(nicknameLabel);
 		publicInfoPanel.add(ageLabel);
+		publicInfoPanel.add(tierLabel);
 		userInfoPanel.add(publicInfoPanel);
 		add(userInfoPanel, BorderLayout.NORTH);
 
@@ -64,7 +66,7 @@ public class PublicProfilePage extends JPanel {
 		ArrayList<Post> posts = userManager.getPostsByUser(user);
 		for (Post post : posts) {
 			if (post.isPublic()) {
-			PhotoGridCell photoGridCell = new PhotoGridCell(post);
+			PhotoGridCell photoGridCell = new PhotoGridCell(post, currentUser);
 			photoGridCell.setPreferredSize(new Dimension(160, 200));
 			postsPanel.add(photoGridCell);
 			}

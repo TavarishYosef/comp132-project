@@ -23,7 +23,7 @@ import users.UserManager;
 @SuppressWarnings("serial")
 public class PhotoGridCell extends JPanel {
 
-	public PhotoGridCell(Post post) {
+	public PhotoGridCell(Post post, User currentUser) {
 		String imageName = post.getImageName();
 		ImageMatrix image = new ImageMatrix(150, 150);
 		try {
@@ -67,7 +67,7 @@ public class PhotoGridCell extends JPanel {
 		thumbnailLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				PhotoInteraction photoInteraction = new PhotoInteraction(post);
+				PhotoInteraction photoInteraction = new PhotoInteraction(post, currentUser);
 				photoInteraction.setVisible(true);
 			}
 		});
@@ -77,7 +77,7 @@ public class PhotoGridCell extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				JFrame frame = new JFrame(user.getNickname() + "'s Profile");
-				PublicProfilePage profilePage = new PublicProfilePage(user);
+				PublicProfilePage profilePage = new PublicProfilePage(user, currentUser);
 				frame.add(profilePage);
 				frame.setSize(700, 600);
 				frame.setResizable(false);

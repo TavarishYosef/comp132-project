@@ -27,7 +27,7 @@ public class MainFrame extends JFrame {
 
 	private JComponent displayedComponent;
 
-	public MainFrame(User user) {
+	public MainFrame(User currentUser) {
 		UserManager userManager = new UserManager();
 		setTitle("PhotoCloud");
 		setSize(950, 600);
@@ -46,7 +46,7 @@ public class MainFrame extends JFrame {
 
 		// The different pages
 		DiscoverPage discoverPage = new DiscoverPage(userManager.getUser("tavarishyosef"));
-		PrivateProfilePage privateProfilePage = new PrivateProfilePage(user);
+		PrivateProfilePage privateProfilePage = new PrivateProfilePage(currentUser);
 
 		// Add the components
 		controlPanel.add(discoverButton);
@@ -101,7 +101,7 @@ public class MainFrame extends JFrame {
 					JOptionPane.showMessageDialog(searchButton, "User not found", "Error", JOptionPane.ERROR_MESSAGE);
 				} else {
 					JFrame frame = new JFrame(user.getNickname() + "'s Profile");
-					PublicProfilePage profilePage = new PublicProfilePage(user);
+					PublicProfilePage profilePage = new PublicProfilePage(user, currentUser);
 					frame.add(profilePage);
 					frame.setSize(700, 600);
 					frame.setResizable(false);

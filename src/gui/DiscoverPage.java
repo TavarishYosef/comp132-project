@@ -15,7 +15,9 @@ import users.UserManager;
 @SuppressWarnings("serial")
 public class DiscoverPage extends JScrollPane {
 
+	private User user;
 	public DiscoverPage(User user) {
+		this.user = user;
 		JPanel gridPanel = new JPanel(new GridLayout(0, 4, 5, 20));
 		setPreferredSize(new Dimension(800, 0));
 		UserManager userManager = new UserManager();
@@ -23,7 +25,7 @@ public class DiscoverPage extends JScrollPane {
 		HashMap<Integer, Post> posts = userManager.getPostMap();
 		for (Post post : posts.values()) {
 			if (post.isPublic()) {
-				PhotoGridCell photoGridCell = new PhotoGridCell(post);
+				PhotoGridCell photoGridCell = new PhotoGridCell(post, user);
 				photoGridCell.setPreferredSize(new Dimension(160, 200));
 				gridPanel.add(photoGridCell);
 			}
@@ -45,7 +47,7 @@ public class DiscoverPage extends JScrollPane {
 		HashMap<Integer, Post> posts = userManager.getPostMap();
 		for (Post post : posts.values()) {
 			if (post.isPublic()) {
-				PhotoGridCell photoGridCell = new PhotoGridCell(post);
+				PhotoGridCell photoGridCell = new PhotoGridCell(post, user);
 				photoGridCell.setPreferredSize(new Dimension(160, 200));
 				gridPanel.add(photoGridCell);
 			}
