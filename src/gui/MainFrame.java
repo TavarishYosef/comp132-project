@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import image.ImageSecretary;
+import main.BaseLogger;
 import users.User;
 import users.UserManager;
 
@@ -104,14 +105,16 @@ public class MainFrame extends JFrame {
 				chooser.setFileFilter(filter);
 				int returnVal = chooser.showOpenDialog(postButton);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					String imageName = chooser.getSelectedFile().getName();
 					try {
-						String imageName = chooser.getSelectedFile().getName();
 						UploadImagePage uploadImagePage = new UploadImagePage(currentUser,
 								ImageSecretary.readResourceImage(imageName));
 						uploadImagePage.setVisible(true);
+						BaseLogger.info().log("User " + currentUser.getNickname() + " opened file " + imageName);
 					} catch (IOException io) {
 						JOptionPane.showMessageDialog(postButton, "File does not exist", "Error",
 								JOptionPane.ERROR_MESSAGE);
+						BaseLogger.error().log("User " + currentUser.getNickname() + " failed to open " + imageName);
 					} catch (NullPointerException nullPo) {
 						return;
 					}
@@ -147,6 +150,7 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
+				BaseLogger.info().log("User " + currentUser.getNickname() + " logged out.");
 				LoginPage loginPage = new LoginPage();
 				loginPage.setVisible(true);
 				dispose();

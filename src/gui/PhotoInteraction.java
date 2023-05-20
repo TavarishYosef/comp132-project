@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 
 import image.ImageMatrix;
 import image.ImageSecretary;
+import main.BaseLogger;
 import users.Comment;
 import users.Post;
 import users.User;
@@ -53,7 +54,7 @@ public class PhotoInteraction extends JFrame {
 		try {
 			image = ImageSecretary.readResourceImage(post.getImageName());
 		} catch (IOException e) {
-			System.err.println("Photo not found.");
+			BaseLogger.error().log("Failed to open file" + post.getImageName());
 		}
 		ImageIcon fullImage = new ImageIcon(image.getBufferedImage().getScaledInstance(800, 600, Image.SCALE_DEFAULT));
 		JLabel fullImageLabel = new JLabel(fullImage);
@@ -111,6 +112,7 @@ public class PhotoInteraction extends JFrame {
 					commentsArea.setText(post.getComments());
 					setSize(1000, 801);
 					setSize(1000, 800);
+					BaseLogger.info().log("User " + user.getNickname() + " left a comment on post " + post.getId());
 				}
 			}
 		});
@@ -121,9 +123,11 @@ public class PhotoInteraction extends JFrame {
 				if (post.isLikedBy(user)) {
 					post.removeLike(user);
 					likeButton.setText("Like");
+					BaseLogger.info().log("User " + user.getNickname() + " liked post " + post.getId());
 				} else {
 					post.addLike(user);
 					likeButton.setText("Unlike");
+					BaseLogger.info().log("User " + user.getNickname() + " unliked post " + post.getId());
 				}
 				
 				descriptionTextArea.setText(post.getDescription() + "\n\n\nLikes: " + post.getLikes());

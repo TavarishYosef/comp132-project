@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 
 import image.ImageMatrix;
 import image.ImageSecretary;
+import main.BaseLogger;
 import users.Post;
 import users.User;
 import users.UserManager;
@@ -42,7 +43,7 @@ public class PhotoGridCell extends JPanel {
 		try {
 			image = ImageSecretary.readResourceImage(imageName);
 		} catch (IOException e) {
-			System.err.println("Image" + imageName + "does not exist");
+			BaseLogger.error().log("Failed to open file " + imageName);
 		}
 		// Get User information
 		User poster = post.getPoster();

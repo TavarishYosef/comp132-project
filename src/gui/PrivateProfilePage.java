@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import main.BaseLogger;
 import users.User;
 import users.UserManager;
 
@@ -175,6 +176,7 @@ public class PrivateProfilePage extends JPanel {
 				userManager.addUser(user);
 				userManager.updateUsers();
 				nameLabel.setText("Name:   " + user.getName());
+				BaseLogger.info().log("User " + user.getNickname() + " changed their name");
 			}
 		});
 
@@ -192,6 +194,7 @@ public class PrivateProfilePage extends JPanel {
 				userManager.addUser(user);
 				userManager.updateUsers();
 				surnameLabel.setText("Surname:   " + user.getSurname());
+				BaseLogger.info().log("User " + user.getNickname() + " changed their surname");
 			}
 		});
 		ageButton.addActionListener(new ActionListener() {
@@ -215,6 +218,7 @@ public class PrivateProfilePage extends JPanel {
 				userManager.addUser(user);
 				userManager.updateUsers();
 				ageLabel.setText("Age:   " + user.getAge());
+				BaseLogger.info().log("User " + user.getNickname() + " changed their age");
 			}
 		});
 		emailButton.addActionListener(new ActionListener() {
@@ -231,12 +235,12 @@ public class PrivateProfilePage extends JPanel {
 					JOptionPane.showMessageDialog(ageButton, "Email taken", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-
 				user.setEmail(newEmail);
 				userManager.removeUser(user);
 				userManager.addUser(user);
 				userManager.updateUsers();
 				emailLabel.setText("Email:   " + user.getEmail());
+				BaseLogger.info().log("User " + user.getNickname() + " changed their email");
 			}
 		});
 		profilePhotoButton.addActionListener(new ActionListener() {
@@ -256,6 +260,7 @@ public class PrivateProfilePage extends JPanel {
 					userManager.updateUsers();
 					photoLabel.setIcon(
 							new ImageIcon(user.getProfilePhotoImage().getScaledInstance(150, 150, Image.SCALE_FAST)));
+					BaseLogger.info().log("User " + user.getNickname() + " changed their profile photo");
 				}
 			}
 		});
@@ -281,6 +286,7 @@ public class PrivateProfilePage extends JPanel {
 				userManager.removeUser(user);
 				userManager.addUser(user);
 				userManager.updateUsers();
+				BaseLogger.info().log("User " + user.getNickname() + " changed their password");
 			}
 		});
 		postsButton.addActionListener(new ActionListener() {

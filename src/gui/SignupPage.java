@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import main.BaseLogger;
 import users.User;
 import users.UserManager;
 import users.UserTier;
@@ -309,6 +310,7 @@ public class SignupPage extends JFrame {
 							UserTier.FREE);
 					userManager.addUser(user);
 					userManager.writeUser(user);
+					BaseLogger.info().log("User " + nickname + " created their account.");
 					setVisible(false);
 					MainFrame mainFrame = new MainFrame(user);
 					mainFrame.setVisible(true);

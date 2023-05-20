@@ -22,6 +22,7 @@ import filter.GrayscaleFilter;
 import filter.SharpenFilter;
 import image.ImageMatrix;
 import image.ImageSecretary;
+import main.BaseLogger;
 import users.Post;
 import users.User;
 import users.UserManager;
@@ -92,7 +93,11 @@ public class UploadImagePage extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int degree = (int) degreeBox.getSelectedItem();
+				long startTime = System.currentTimeMillis();
 				ImageMatrix sharpImage = sharpenFilter.apply(currentImage, degree);
+				long endTime = System.currentTimeMillis();
+				long elapsedTime = endTime - startTime;
+				BaseLogger.info().log("Sharpen filter applied to file, took: " + elapsedTime + "ms");
 				imageLabel.setIcon(new ImageIcon(
 						sharpImage.getBufferedImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
 				updateImage(sharpImage);
@@ -109,7 +114,11 @@ public class UploadImagePage extends JFrame {
 					return;
 				}
 				int degree = (int) degreeBox.getSelectedItem();
+				long startTime = System.currentTimeMillis();
 				ImageMatrix edgeImage = edgeDetection.apply(currentImage, degree);
+				long endTime = System.currentTimeMillis();
+				long elapsedTime = endTime - startTime;
+				BaseLogger.info().log("Edge Detection filter applied to file, took: " + elapsedTime + "ms");
 				imageLabel.setIcon(new ImageIcon(
 						edgeImage.getBufferedImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
 				updateImage(edgeImage);
@@ -126,7 +135,11 @@ public class UploadImagePage extends JFrame {
 					return;
 				}
 				int degree = (int) degreeBox.getSelectedItem();
+				long startTime = System.currentTimeMillis();
 				ImageMatrix contrastImage = contrastFilter.apply(currentImage, degree);
+				long endTime = System.currentTimeMillis();
+				long elapsedTime = endTime - startTime;
+				BaseLogger.info().log("Contrast filter applied to file, took: " + elapsedTime + "ms");
 				updateImage(contrastImage);
 				imageLabel.setIcon(new ImageIcon(
 						contrastImage.getBufferedImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
@@ -143,7 +156,11 @@ public class UploadImagePage extends JFrame {
 					return;
 				}
 				int degree = (int) degreeBox.getSelectedItem();
+				long startTime = System.currentTimeMillis();
 				ImageMatrix grayscaleImage = grayscaleFilter.apply(currentImage, degree);
+				long endTime = System.currentTimeMillis();
+				long elapsedTime = endTime - startTime;
+				BaseLogger.info().log("Grayscale filter applied to file, took: " + elapsedTime + "ms");
 				updateImage(grayscaleImage);
 				imageLabel.setIcon(new ImageIcon(
 						grayscaleImage.getBufferedImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
@@ -154,7 +171,11 @@ public class UploadImagePage extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int degree = (int) degreeBox.getSelectedItem();
+				long startTime = System.currentTimeMillis();
 				ImageMatrix blurredImage = blurFilter.apply(currentImage, degree);
+				long endTime = System.currentTimeMillis();
+				long elapsedTime = endTime - startTime;
+				BaseLogger.info().log("Blur filter applied to file, took: " + elapsedTime + "ms");
 				updateImage(blurredImage);
 				imageLabel.setIcon(new ImageIcon(
 						blurredImage.getBufferedImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
@@ -171,7 +192,11 @@ public class UploadImagePage extends JFrame {
 					return;
 				}
 				int degree = (int) degreeBox.getSelectedItem();
+				long startTime = System.currentTimeMillis();
 				ImageMatrix brightImage = brightnessFilter.apply(currentImage, degree);
+				long endTime = System.currentTimeMillis();
+				long elapsedTime = endTime - startTime;
+				BaseLogger.info().log("Brightness filter applied to file, took: " + elapsedTime + "ms");
 				updateImage(brightImage);
 				imageLabel.setIcon(new ImageIcon(
 						brightImage.getBufferedImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
@@ -205,6 +230,7 @@ public class UploadImagePage extends JFrame {
 				}
 				userManager.addPost(id, post);
 				userManager.writePost(post);
+				BaseLogger.info().log("User " + currentUser.getNickname() + " created post " + post.getId());
 				setVisible(false);
 				dispose();
 			}

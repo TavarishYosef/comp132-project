@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 
 import image.ImageMatrix;
 import image.ImageSecretary;
+import main.BaseLogger;
 import users.Comment;
 import users.Post;
 import users.User;
@@ -56,8 +57,9 @@ public class ManagePhotoPage extends JFrame {
 		image = new ImageMatrix(800, 600);
 		try {
 			image = ImageSecretary.readResourceImage(post.getImageName());
+			BaseLogger.info().log("User " + user.getNickname() + " opened file " + post.getImageName());
 		} catch (IOException e) {
-			System.err.println("Photo not found.");
+			BaseLogger.error().log("User " + user.getNickname() + " failed to open file " + post.getImageName());
 		}
 		ImageIcon fullImage = new ImageIcon(image.getBufferedImage().getScaledInstance(800, 600, Image.SCALE_DEFAULT));
 		imageLabel = new JLabel(fullImage);
@@ -76,6 +78,7 @@ public class ManagePhotoPage extends JFrame {
 				userManager.getPostMap().get(post.getId()).setPublic(false);
 				userManager.updatePosts();
 				JOptionPane.showMessageDialog(null, "Post set to private");
+				BaseLogger.info().log("User " + user.getNickname() + " set post " + post.getId() + " to private");
 			}
 		});
 		// Public Button
@@ -85,6 +88,7 @@ public class ManagePhotoPage extends JFrame {
 				userManager.getPostMap().get(post.getId()).setPublic(true);
 				userManager.updatePosts();
 				JOptionPane.showMessageDialog(null, "Post set to public");
+				BaseLogger.info().log("User " + user.getNickname() + " set post " + post.getId() + " to public");
 			}
 		});
 		// Delete Button
@@ -97,6 +101,7 @@ public class ManagePhotoPage extends JFrame {
 				Comment.deleteComments(post);
 				Comment.writeComments();
 				setVisible(false);
+				BaseLogger.info().log("User " + user.getNickname() + " deleted post " + post.getId());
 				dispose();
 			}
 		});

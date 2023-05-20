@@ -14,6 +14,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import main.BaseLogger;
+import users.User;
 import users.UserManager;
 
 /**
@@ -65,7 +67,9 @@ public class LoginPage extends JFrame {
 
 				if (userManager.validateUser(nickname, password)) {
 					setVisible(false);
-					MainFrame mainFrame = new MainFrame(userManager.getUser(nickname));
+					User user = userManager.getUser(nickname);
+					BaseLogger.info().log("User " + user.getNickname() + " logged in");
+					MainFrame mainFrame = new MainFrame(user);
 					mainFrame.setVisible(true);
 					dispose();
 				} else {

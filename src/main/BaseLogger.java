@@ -26,7 +26,7 @@ public class BaseLogger {
 	 * @return A {@link BaseLogger} instance for info logging
 	 */
 	public static BaseLogger info() {
-		BaseLogger baseLogger = new BaseLogger("application_log.txt");
+		BaseLogger baseLogger = new BaseLogger("application_info.txt");
 		baseLogger.type = "[INFO] ";
 		return baseLogger;
 	}
@@ -44,7 +44,7 @@ public class BaseLogger {
 	 * @param message Message to be written
 	 */
 	public void log(String message) {
-		String formattedLog = DATE_FORMAT.format(new Date()) + type + message;
+		String formattedLog = DATE_FORMAT.format(new Date()) + type + message + "\n";
 
 		try (FileWriter writer = new FileWriter(logFile, true)) {
 			writer.write(formattedLog);
