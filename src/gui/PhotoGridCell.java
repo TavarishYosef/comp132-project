@@ -87,7 +87,7 @@ public class PhotoGridCell extends JPanel {
 					return;
 				}
 				if (currentUser.getNickname().equals("admin")) {
-					ManagePhotoPage managePhotoPage = new ManagePhotoPage(user, post);
+					ManagePhotoPage managePhotoPage = new ManagePhotoPage(userManager.getUser("admin"), post);
 					managePhotoPage.setVisible(true);
 				} else {
 					PhotoInteraction photoInteraction = new PhotoInteraction(post, currentUser);
