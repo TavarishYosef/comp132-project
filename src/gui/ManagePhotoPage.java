@@ -41,6 +41,7 @@ public class ManagePhotoPage extends JFrame {
 	public ManagePhotoPage(User user, Post post) {
 		setLayout(new BorderLayout());
 		setSize(950, 750);
+		setLocationRelativeTo(null);
 
 		JLabel imageLabel;
 		JPanel buttonPanel;

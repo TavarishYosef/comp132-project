@@ -29,12 +29,6 @@ import users.UserManager;
  */
 public class MainFrame extends JFrame {
 
-	public static void main(String[] args) {
-		UserManager userManager = new UserManager();
-		MainFrame mainFrame = new MainFrame(userManager.getUser("aliveli"));
-		mainFrame.setVisible(true);
-	}
-
 	private JComponent displayedComponent;
 
 	/**
