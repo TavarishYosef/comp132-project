@@ -9,6 +9,7 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -29,12 +30,15 @@ import users.User;
  * @author Yusuf
  *
  */
-@SuppressWarnings("serial")
-public class PhotoInteraction extends JDialog {
+public class PhotoInteraction extends JFrame {
 	private JTextArea commentsArea;
-
+	/**
+	 * Creates a new {@link PhotoInteraction} object
+	 * @param post {@link Post} to be displayed
+	 * @param user Current {@link User} of the session
+	 */
 	public PhotoInteraction(Post post, User user) {
-		
+		// Set up the frame
 		setTitle("Photo Interaction");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setSize(1000, 800);
@@ -55,7 +59,7 @@ public class PhotoInteraction extends JDialog {
 		JLabel fullImageLabel = new JLabel(fullImage);
 		panel.add(fullImageLabel, BorderLayout.CENTER);
 
-		// Display profile photo, nickname, post description
+		// Display profile photo, nickname, post description and likes
 		ImageIcon profilePhoto = new ImageIcon();
 		try {
 			profilePhoto = new ImageIcon(ImageSecretary.readResourceImage(poster.getProfilePhoto()).getBufferedImage()
@@ -65,7 +69,7 @@ public class PhotoInteraction extends JDialog {
 		}
 		JLabel profilePhotoLabel = new JLabel(profilePhoto);
 		JLabel nicknameLabel = new JLabel(poster.getNickname());
-		JTextArea descriptionTextArea = new JTextArea(post.getDescription());
+		JTextArea descriptionTextArea = new JTextArea(post.getDescription() + "\n\n\nLikes: " + post.getLikes());
 		descriptionTextArea.setEditable(false);
 
 		JPanel userInfoPanel = new JPanel();
@@ -87,9 +91,14 @@ public class PhotoInteraction extends JDialog {
 		JPanel commentPanel = new JPanel(new BorderLayout());
 		JTextField commentField = new JTextField();
 		JButton commentButton = new JButton("Add Comment");
-
+		JButton likeButton = new JButton();
+		if (post.isLikedBy(user)) {
+			likeButton.setText("Unlike");
+		} else {
+			likeButton.setText("Like");
+		}
+		// Comment Button Action
 		commentButton.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String commentText = commentField.getText();
@@ -99,10 +108,28 @@ public class PhotoInteraction extends JDialog {
 					comment.write();
 					commentsArea.setText(post.getComments());
 					commentField.setText("");
+					commentsArea.setText(post.getComments());
+					setSize(1000, 801);
+					setSize(1000, 800);
 				}
 			}
 		});
-
+		// Like Button Action
+		likeButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (post.isLikedBy(user)) {
+					post.removeLike(user);
+					likeButton.setText("Like");
+				} else {
+					post.addLike(user);
+					likeButton.setText("Unlike");
+				}
+				
+				descriptionTextArea.setText(post.getDescription() + "\n\n\nLikes: " + post.getLikes());
+			}
+		});
+		commentPanel.add(likeButton, BorderLayout.WEST);
 		commentPanel.add(commentField, BorderLayout.CENTER);
 		commentPanel.add(commentButton, BorderLayout.EAST);
 		panel.add(commentPanel, BorderLayout.SOUTH);

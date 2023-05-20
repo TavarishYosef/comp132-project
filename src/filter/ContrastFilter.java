@@ -5,6 +5,9 @@ import image.ImageMatrix;
 /**
  * A filter that adjusts the contrast of an image by modifying each pixel's RGB
  * values according to a specified formula.
+ * 
+ * @author Yusuf
+ * 
  */
 public class ContrastFilter implements Filter {
 	/**
@@ -17,7 +20,6 @@ public class ContrastFilter implements Filter {
 	 * @param degree degree of the filter between -10 and 10
 	 * @return the modified image matrix
 	 */
-	@Override
 	public ImageMatrix apply(ImageMatrix image, int degree) {
 		if (degree <= 0)
 			return image;
@@ -25,10 +27,10 @@ public class ContrastFilter implements Filter {
 			degree = 10;
 
 		ImageMatrix result = new ImageMatrix(image.getWidth(), image.getHeight());
-
+		// Calculate contrast factor
+		double factor = (259 * (25 * degree + 255)) / (255 * (259 - 25 * degree));
 		for (int x = 0; x < image.getWidth(); x++) {
 			for (int y = 0; y < image.getHeight(); y++) {
-				double factor = (259 * (25 * degree + 255)) / (255 * (259 - 25 * degree));
 				int red = image.getRed(x, y);
 				int green = image.getGreen(x, y);
 				int blue = image.getBlue(x, y);

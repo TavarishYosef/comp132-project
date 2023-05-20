@@ -13,7 +13,11 @@ SIGNATURE: <Yusuf Cemal Karatas, 83639>
 package main;
 
 import gui.LoginPage;
-
+/**
+ * Main executable for PhotoCloud application
+ * @author Yusuf
+ *
+ */
 public class Main {
 
 	public static void main(String[] args) {

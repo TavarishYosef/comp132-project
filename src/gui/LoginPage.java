@@ -16,14 +16,22 @@ import javax.swing.border.EmptyBorder;
 
 import users.UserManager;
 
-@SuppressWarnings("serial")
+/**
+ * Requests a username and password to log users in. Has a signup button
+ * 
+ * @author Yusuf
+ *
+ */
 public class LoginPage extends JFrame {
 
 	private JTextField nicknameField;
 	private JPasswordField passwordField;
 
+	/**
+	 * Constructs a new {@link LoginPage} object
+	 */
 	public LoginPage() {
-		// Set up the JFrame
+		// Set up the frame
 		setTitle("PhotoCloud Login Page");
 		setSize(450, 250);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

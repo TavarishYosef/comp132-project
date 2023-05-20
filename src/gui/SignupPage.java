@@ -18,7 +18,13 @@ import users.User;
 import users.UserManager;
 import users.UserTier;
 
-@SuppressWarnings("serial")
+/**
+ * A Signup Page for the PhotoCloud application. Validates the user's
+ * information to create a new account. Has a Login button
+ * 
+ * @author Yusuf
+ *
+ */
 public class SignupPage extends JFrame {
 
 	private JLabel loginLabel;
@@ -43,7 +49,9 @@ public class SignupPage extends JFrame {
 	private JPasswordField passwordField;
 	private JButton loginButton;
 	private JButton signupButton;
-
+	/**
+	 * Creates a new {@link SignupPage} object
+	 */
 	public SignupPage() {
 		// Set up the JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -297,7 +305,8 @@ public class SignupPage extends JFrame {
 				}
 
 				if (valid) {
-					User user = new User(nickname, password, name, surname, Integer.parseInt(age), email, UserTier.FREE);
+					User user = new User(nickname, password, name, surname, Integer.parseInt(age), email,
+							UserTier.FREE);
 					userManager.addUser(user);
 					userManager.writeUser(user);
 					setVisible(false);

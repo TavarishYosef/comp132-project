@@ -11,6 +11,7 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -20,17 +21,30 @@ import users.Post;
 import users.User;
 import users.UserManager;
 
-@SuppressWarnings("serial")
+/**
+ * PhotoGridCell displays a thumbnail of a post and the poster's profile photo
+ * and nickname
+ * 
+ * @author Yusuf
+ *
+ */
 public class PhotoGridCell extends JPanel {
-
+	/**
+	 * Constructs a new PhotoGridCell object
+	 * 
+	 * @param post        Post to be displayed
+	 * @param currentUser Current User of the session
+	 */
 	public PhotoGridCell(Post post, User currentUser) {
 		String imageName = post.getImageName();
 		ImageMatrix image = new ImageMatrix(150, 150);
+		// Get image
 		try {
 			image = ImageSecretary.readResourceImage(imageName);
 		} catch (IOException e) {
 			System.err.println("Image" + imageName + "does not exist");
 		}
+		// Get User information
 		User poster = post.getPoster();
 		String nickname = poster.getNickname();
 		setLayout(new BorderLayout());
@@ -67,8 +81,17 @@ public class PhotoGridCell extends JPanel {
 		thumbnailLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				PhotoInteraction photoInteraction = new PhotoInteraction(post, currentUser);
-				photoInteraction.setVisible(true);
+				if (userManager.getPostMap().get(post.getId()) == null) {
+					JOptionPane.showMessageDialog(null, "This post is deleted", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				if (currentUser.getNickname().equals("admin")) {
+					ManagePhotoPage managePhotoPage = new ManagePhotoPage(user, post);
+					managePhotoPage.setVisible(true);
+				} else {
+					PhotoInteraction photoInteraction = new PhotoInteraction(post, currentUser);
+					photoInteraction.setVisible(true);
+				}
 			}
 		});
 

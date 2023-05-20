@@ -6,6 +6,12 @@ import java.io.IOException;
 import image.ImageMatrix;
 import image.ImageSecretary;
 
+/**
+ * A user of the PhotoCloud application
+ * 
+ * @author Yusuf
+ *
+ */
 public class User {
 	private String nickname; // unique nickname
 	private String password;
@@ -16,6 +22,18 @@ public class User {
 	private String profilePhoto; // optional pfp
 	private UserTier userTier;
 
+	/**
+	 * Constructs a new User object
+	 * 
+	 * @param nickname
+	 * @param password
+	 * @param name
+	 * @param surname
+	 * @param age
+	 * @param email
+	 * @param profilePhoto
+	 * @param userTier
+	 */
 	public User(String nickname, String password, String name, String surname, int age, String email,
 			String profilePhoto, UserTier userTier) {
 		this.nickname = nickname;
@@ -28,6 +46,17 @@ public class User {
 		this.userTier = userTier;
 	}
 
+	/**
+	 * Constructs a new User object
+	 * 
+	 * @param nickname
+	 * @param password
+	 * @param name
+	 * @param surname
+	 * @param age
+	 * @param email
+	 * @param userTier
+	 */
 	public User(String nickname, String password, String name, String surname, int age, String email,
 			UserTier userTier) {
 		this.nickname = nickname;
@@ -44,6 +73,7 @@ public class User {
 		return nickname.equals(other.getNickname());
 	}
 
+	// getters and setters
 	public int getAge() {
 		return age;
 	}
@@ -56,7 +86,6 @@ public class User {
 		return name;
 	}
 
-	// getters and setters
 	public String getNickname() {
 		return nickname;
 	}
@@ -66,6 +95,17 @@ public class User {
 	}
 
 	public String getProfilePhoto() {
+		return profilePhoto;
+	}
+
+	public BufferedImage getProfilePhotoImage() {
+		BufferedImage profilePhoto = null;
+		try {
+			ImageMatrix profilePhotoImage = ImageSecretary.readResourceImage(getProfilePhoto());
+			profilePhoto = profilePhotoImage.getBufferedImage();
+		} catch (IOException e) {
+			System.err.println("Photo " + getProfilePhoto() + " not found");
+		}
 		return profilePhoto;
 	}
 
@@ -101,20 +141,9 @@ public class User {
 		this.surname = surname;
 	}
 
-	public BufferedImage getProfilePhotoImage() {
-		BufferedImage profilePhoto = null;
-		try {
-			ImageMatrix profilePhotoImage = ImageSecretary.readResourceImage(getProfilePhoto());
-			profilePhoto = profilePhotoImage.getBufferedImage();
-		} catch (IOException e) {
-			System.err.println("Photo " + getProfilePhoto() + " not found");
-		}
-		return profilePhoto;
-	}
-
 	@Override
 	public String toString() {
-		return super.toString() + "User [nickname=" + nickname + ", password=" + password + ", name=" + name + ", surname=" + surname
-				+ ", age=" + age + ", email=" + email + ", profilePhoto=" + profilePhoto + "]";
+		return super.toString() + "User [nickname=" + nickname + ", password=" + password + ", name=" + name
+				+ ", surname=" + surname + ", age=" + age + ", email=" + email + ", profilePhoto=" + profilePhoto + "]";
 	}
 }

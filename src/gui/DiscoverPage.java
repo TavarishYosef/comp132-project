@@ -12,16 +12,27 @@ import users.Post;
 import users.User;
 import users.UserManager;
 
-@SuppressWarnings("serial")
+/**
+ * Displays public posts made by all users
+ * 
+ * @author Yusuf
+ *
+ */
 public class DiscoverPage extends JScrollPane {
 
 	private User user;
+
+	/**
+	 * Constructs a new {@link DiscoverPage} object
+	 * 
+	 * @param user Current User of the session
+	 */
 	public DiscoverPage(User user) {
 		this.user = user;
 		JPanel gridPanel = new JPanel(new GridLayout(0, 4, 5, 20));
 		setPreferredSize(new Dimension(800, 0));
 		UserManager userManager = new UserManager();
-
+		// Get all public posts
 		HashMap<Integer, Post> posts = userManager.getPostMap();
 		for (Post post : posts.values()) {
 			if (post.isPublic()) {
@@ -39,6 +50,9 @@ public class DiscoverPage extends JScrollPane {
 		getVerticalScrollBar().setUnitIncrement(20);
 	}
 
+	/**
+	 * Refreshes the DiscoverPage
+	 */
 	public void refresh() {
 		JPanel gridPanel = new JPanel(new GridLayout(0, 4, 5, 20));
 		setPreferredSize(new Dimension(800, 0));

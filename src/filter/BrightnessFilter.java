@@ -2,7 +2,9 @@ package filter;
 
 import image.ImageMatrix;
 /**
- * a filter that changes the brightness of an image
+ * A filter that increases the brightness of an image
+ * @author Yusuf
+ * 
  */
 public class BrightnessFilter implements Filter {
 
@@ -24,6 +26,7 @@ public class BrightnessFilter implements Filter {
 
         for (int x = 0; x < image.getWidth(); x++) {
             for (int y = 0; y < image.getHeight(); y++) {
+            	// Increase RGB values
                 int red = Math.min(255, Math.max(0, image.getRed(x, y) + degree * BRIGHTNESS_STEP_COUNT));
                 int green = Math.min(255, Math.max(0, image.getGreen(x, y) + degree * BRIGHTNESS_STEP_COUNT));
                 int blue = Math.min(255, Math.max(0, image.getBlue(x, y) + degree * BRIGHTNESS_STEP_COUNT));

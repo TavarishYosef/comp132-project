@@ -16,15 +16,19 @@ import users.Post;
 import users.User;
 import users.UserManager;
 
-@SuppressWarnings("serial")
 /**
- * PublicProfilePage shows the user's public information
- * and lists the user's public posts
+ * PublicProfilePage shows the user's public information and lists the user's
+ * public posts
+ * 
  * @author Yusuf
  *
  */
 public class PublicProfilePage extends JPanel {
-
+	/**
+	 * Creates a new {@link PublicProfilePage} object
+	 * @param user Owner of the profile
+	 * @param currentUser current User of the session
+	 */
 	public PublicProfilePage(User user, User currentUser) {
 		UserManager userManager = new UserManager();
 		setLayout(new BorderLayout());
@@ -35,7 +39,8 @@ public class PublicProfilePage extends JPanel {
 		userInfoPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		// Display the user's profile photo
-		ImageIcon profilePhoto = new ImageIcon(user.getProfilePhotoImage().getScaledInstance(180, 180, Image.SCALE_FAST));
+		ImageIcon profilePhoto = new ImageIcon(
+				user.getProfilePhotoImage().getScaledInstance(180, 180, Image.SCALE_FAST));
 		JLabel profilePhotoLabel = new JLabel(profilePhoto);
 		userInfoPanel.add(profilePhotoLabel);
 
@@ -66,9 +71,9 @@ public class PublicProfilePage extends JPanel {
 		ArrayList<Post> posts = userManager.getPostsByUser(user);
 		for (Post post : posts) {
 			if (post.isPublic()) {
-			PhotoGridCell photoGridCell = new PhotoGridCell(post, currentUser);
-			photoGridCell.setPreferredSize(new Dimension(160, 200));
-			postsPanel.add(photoGridCell);
+				PhotoGridCell photoGridCell = new PhotoGridCell(post, currentUser);
+				photoGridCell.setPreferredSize(new Dimension(160, 200));
+				postsPanel.add(photoGridCell);
 			}
 		}
 	}

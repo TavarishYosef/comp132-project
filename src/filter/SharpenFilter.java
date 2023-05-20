@@ -5,6 +5,7 @@ import image.ImageMatrix;
 /**
  * A filter that sharpens the image by subtracting blurred pixels from original
  * pixels to get details. Then adds details to the original image
+ *@author Yusuf
  *
  */
 public class SharpenFilter implements Filter {
@@ -16,18 +17,16 @@ public class SharpenFilter implements Filter {
 	 * @return a new image matrix with the sharpen filter applied
 	 * @see ImageMatrix
 	 */
-	@Override
 	public ImageMatrix apply(ImageMatrix image, int degree) {
 		if (degree <= 0)
 			return image;
 		if (degree > 10)
 			degree = 10;
-		// First, we need to blur the original image
+		// Blur the original image
 		BlurFilter blurFilter = new BlurFilter();
 		ImageMatrix blurredImageMatrix = blurFilter.apply(image, degree);
 
-		// Then, we need to calculate the difference between the original image and the
-		// blurred image
+		// Calculate difference
 		ImageMatrix detailImageMatrix = new ImageMatrix(image.getWidth(), image.getHeight());
 		for (int i = 0; i < image.getWidth(); i++) {
 			for (int j = 0; j < image.getHeight(); j++) {
@@ -39,7 +38,7 @@ public class SharpenFilter implements Filter {
 				int blurredGreen = blurredImageMatrix.getGreen(i, j);
 				int blurredBlue = blurredImageMatrix.getBlue(i, j);
 
-				// Subtract the blurred image from the original image to get the details
+				// Subtract the blurred image from the original image
 				int red = Math.max(0, originalRed - blurredRed);
 				int green = Math.max(0, originalGreen - blurredGreen);
 				int blue = Math.max(0, originalBlue - blurredBlue);
@@ -49,7 +48,7 @@ public class SharpenFilter implements Filter {
 			}
 		}
 
-		// Add the details to the original image to make it sharp
+		// Add the details to the original image
 		ImageMatrix sharpImageMatrix = new ImageMatrix(image.getWidth(), image.getHeight());
 		for (int i = 0; i < image.getWidth(); i++) {
 			for (int j = 0; j < image.getHeight(); j++) {
@@ -61,7 +60,6 @@ public class SharpenFilter implements Filter {
 				int detailGreen = detailImageMatrix.getGreen(i, j);
 				int detailBlue = detailImageMatrix.getBlue(i, j);
 
-				// Add the details to the original image to make it sharp
 				int red = Math.max(0, detailRed + originalRed);
 				int green = Math.max(0, detailGreen + originalGreen);
 				int blue = Math.max(0, detailBlue + originalBlue);

@@ -19,7 +19,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import users.User;
 import users.UserManager;
 
-@SuppressWarnings("serial")
+/**
+ * Shows the user's private information and lets them change it
+ * 
+ * @author Yusuf
+ *
+ */
 public class PrivateProfilePage extends JPanel {
 	private UserManager userManager;
 	private JLabel nicknameLabel;
@@ -34,7 +39,14 @@ public class PrivateProfilePage extends JPanel {
 	private JButton surnameButton;
 	private JButton emailButton;
 	private JButton ageButton;
+	private JButton postsButton;
+	private JButton profilePhotoButton;
 
+	/**
+	 * Creates a new {@link PrivateProfilePage} object
+	 * 
+	 * @param user Owner of the profile page
+	 */
 	public PrivateProfilePage(User user) {
 		userManager = new UserManager();
 		// Initialize Jlabels
@@ -50,7 +62,8 @@ public class PrivateProfilePage extends JPanel {
 		surnameButton = new JButton("Change");
 		emailButton = new JButton("Change");
 		ageButton = new JButton("Change");
-		JButton profilePhotoButton = new JButton("Change Profile Photo");
+		profilePhotoButton = new JButton("Change Profile Photo");
+		postsButton = new JButton("Manage your posts");
 
 		// Configure GridBay Layout and grid cells
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -141,6 +154,11 @@ public class PrivateProfilePage extends JPanel {
 		gbc_passwordButton.gridx = 1;
 		gbc_passwordButton.gridy = 9;
 		add(passwordButton, gbc_passwordButton);
+
+		GridBagConstraints gbc_postsButton = new GridBagConstraints();
+		gbc_postsButton.gridx = 1;
+		gbc_postsButton.gridy = 11;
+		add(postsButton, gbc_postsButton);
 
 		// Add actions to buttons
 		nameButton.addActionListener(new ActionListener() {
@@ -263,6 +281,13 @@ public class PrivateProfilePage extends JPanel {
 				userManager.removeUser(user);
 				userManager.addUser(user);
 				userManager.updateUsers();
+			}
+		});
+		postsButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				OwnPhotoPage ownPhotoPage = new OwnPhotoPage(user);
+				ownPhotoPage.setVisible(true);
 			}
 		});
 	}

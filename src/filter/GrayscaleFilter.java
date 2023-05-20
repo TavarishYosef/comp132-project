@@ -4,6 +4,8 @@ import image.ImageMatrix;
 
 /**
  * A filter that converts an image to grayscale
+ * @author Yusuf
+ * 
  */
 public class GrayscaleFilter implements Filter {
 
@@ -15,7 +17,6 @@ public class GrayscaleFilter implements Filter {
 	 * @return a new image matrix with the grayscale filter applied
 	 * @see ImageMatrix
 	 */
-	@Override
 	public ImageMatrix apply(ImageMatrix image, int degree) {
 		if (degree <= 0)
 			return image;

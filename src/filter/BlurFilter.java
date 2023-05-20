@@ -6,13 +6,16 @@ import image.ImageMatrix;
  * A filter that blurs the image by replacing each pixel with the average value
  * of its neighboring pixels. The degree of blurring is determined by the number
  * of neighboring pixels used to calculate the average.
+ * 
+ * @author Yusuf
+ * 
  */
 public class BlurFilter implements Filter {
 	/**
 	 * Applies blur to the ImageMatrix to the specified degree
 	 * 
-	 * @param image the image matrix to apply the filter to
-	 * @param degree      the degree of the filter
+	 * @param image  the image matrix to apply the filter to
+	 * @param degree the degree of the filter
 	 * @return a new image matrix with the blur filter applied
 	 * @see ImageMatrix
 	 */
@@ -39,7 +42,7 @@ public class BlurFilter implements Filter {
 						}
 						int pixelX = x + i;
 						int pixelY = y + j;
-
+						// Prevent going out pf bounds
 						if (pixelX >= 0 && pixelY >= 0 && pixelX < image.getWidth() && pixelY < image.getHeight()) {
 							redTotal += image.getRed(pixelX, pixelY);
 							greenTotal += image.getGreen(pixelX, pixelY);
@@ -48,7 +51,7 @@ public class BlurFilter implements Filter {
 						}
 					}
 				}
-
+				// Get averages for all colors
 				int redAverage = redTotal / area;
 				int greenAverage = greenTotal / area;
 				int blueAverage = blueTotal / area;
