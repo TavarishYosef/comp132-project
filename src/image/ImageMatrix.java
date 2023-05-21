@@ -100,9 +100,15 @@ public class ImageMatrix {
 	public static int convertRGB(int red, int green, int blue) {
 		return (red << 16 | green << 8 | blue);
 	}
-	
+
+	/**
+	 * Applies an image filter to this image matrix
+	 * 
+	 * @param filter The filter to be applied
+	 * @param degree The degree of the filter
+	 * @return The modified ImageMatrix
+	 */
 	public ImageMatrix applyFilter(Filter filter, int degree) {
 		return filter.apply(this, degree);
 	}
 }
-
