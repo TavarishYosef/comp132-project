@@ -1,0 +1,10 @@
+ndemir,hist,Nezircan,Demir,19,nezircandemir22@ku.edu.tr,kolo.png,HOBBYIST
+KrcnHc,cmpe,Talha,Başıbüyük,19,tbasibuyuk22@ku.edu.tr,goro.jpg,PROFESSIONAL
+Calasurien,fens,Muhammed,Akgöçmen,19,makgocmen22@ku.edu.tr,cat2.jpg,HOBBYIST
+nickname,password,Nick,Name,30,nick@gmail.com,default_user.png,HOBBYIST
+admin,admin123,Admin,Admin,132,admin@photocloud.com,default_user.png,ADMIN
+TavarishYosef,tavar,Tavarish,Joseph,19,yusufkaratas22@ku.edu.tr,dolar7.jpg,PROFESSIONAL
+aliveli,sifre,Ali,Velioğlu,41,avelioglu@ku.edu.tr,nerd.jpg,FREE
+Muzun,elec,Mustafa,Uzun,19,muzun22@ku.edu.tr,hard4.png,FREE
+BrKn,prep,Barkın,Akkol,19,bakkol22@ku.edu.tr,amongdrip.jpg,PROFESSIONAL
+User,1111,John,Doe,50,john@mail.com,default_user.png,FREE

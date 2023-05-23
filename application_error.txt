@@ -1,0 +1,2 @@
+[Paz May 21 02:01:45 TRT 2023][ERROR] User admin failed to open .gitignore
+[Paz May 21 14:18:20 TRT 2023][ERROR] User aliveli failed to open nerd
