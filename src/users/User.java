@@ -141,9 +141,4 @@ public class User {
 		this.surname = surname;
 	}
 
-	@Override
-	public String toString() {
-		return super.toString() + "User [nickname=" + nickname + ", password=" + password + ", name=" + name
-				+ ", surname=" + surname + ", age=" + age + ", email=" + email + ", profilePhoto=" + profilePhoto + "]";
-	}
 }
