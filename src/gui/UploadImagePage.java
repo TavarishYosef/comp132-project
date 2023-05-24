@@ -18,6 +18,7 @@ import filter.BlurFilter;
 import filter.BrightnessFilter;
 import filter.ContrastFilter;
 import filter.EdgeDetection;
+import filter.Filter;
 import filter.GrayscaleFilter;
 import filter.SharpenFilter;
 import image.ImageMatrix;
@@ -81,12 +82,12 @@ public class UploadImagePage extends JFrame {
 		JButton revertButton = new JButton("Revert");
 		JButton postButton = new JButton("Upload");
 		// Initialize filters
-		BlurFilter blurFilter = new BlurFilter();
-		GrayscaleFilter grayscaleFilter = new GrayscaleFilter();
-		BrightnessFilter brightnessFilter = new BrightnessFilter();
-		EdgeDetection edgeDetection = new EdgeDetection();
-		ContrastFilter contrastFilter = new ContrastFilter();
-		SharpenFilter sharpenFilter = new SharpenFilter();
+		Filter blurFilter = new BlurFilter();
+		Filter grayscaleFilter = new GrayscaleFilter();
+		Filter brightnessFilter = new BrightnessFilter();
+		Filter edgeDetection = new EdgeDetection();
+		Filter contrastFilter = new ContrastFilter();
+		Filter sharpenFilter = new SharpenFilter();
 
 		// Sharpen Button available to everyone
 		sharpenButton.addActionListener(new ActionListener() {
