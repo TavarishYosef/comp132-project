@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import main.BaseLogger;
+
 /**
  * This class handles various operations for {@link User} and {@link Post}
  * objects
@@ -50,7 +52,7 @@ public class UserManager {
 				addUser(new User(nickname, password, name, surname, age, email, profilePhoto, userTier));
 			}
 		} catch (FileNotFoundException err) {
-			System.err.println("Error reading user file");
+			BaseLogger.error().log("Failed to read users.txt");
 		}
 		// Get posts
 		try (Scanner scanner = new Scanner(new File("posts.txt"))) {
@@ -70,7 +72,7 @@ public class UserManager {
 				posts.put(id, post);
 			}
 		} catch (FileNotFoundException e) {
-			System.err.println("Error reading posts.txt");
+			BaseLogger.error().log("Failed to read posts.txt");
 		}
 	}
 
