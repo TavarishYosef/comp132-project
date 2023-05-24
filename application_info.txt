@@ -281,3 +281,16 @@
 [Per May 25 00:45:26 TRT 2023][INFO] User admin logged in
 [Per May 25 00:45:38 TRT 2023][INFO] User admin opened file kuphoto.jpg
 [Per May 25 00:45:43 TRT 2023][INFO] Sharpen filter applied to file, took: 2556ms
+[Per May 25 00:47:57 TRT 2023][INFO] User admin logged out.
+[Per May 25 00:57:38 TRT 2023][INFO] User admin logged in
+[Per May 25 00:58:04 TRT 2023][INFO] User admin opened file post_8723.jpg
+[Per May 25 00:58:07 TRT 2023][INFO] User admin opened file post_4541.jpg
+[Per May 25 00:58:16 TRT 2023][INFO] User admin opened file post_5732.jpg
+[Per May 25 00:58:35 TRT 2023][INFO] User admin opened file kucampus.jpg
+[Per May 25 00:58:42 TRT 2023][INFO] User admin opened file kuphoto.jpg
+[Per May 25 00:58:47 TRT 2023][INFO] User admin created post 6749
+[Per May 25 00:58:56 TRT 2023][INFO] User admin opened file post_6749.jpg
+[Per May 25 00:59:01 TRT 2023][INFO] User admin deleted post 6749
+[Per May 25 01:37:13 TRT 2023][INFO] User User logged in
+[Per May 25 01:38:15 TRT 2023][INFO] User User logged in
+[Per May 25 01:39:24 TRT 2023][INFO] User User logged out.
