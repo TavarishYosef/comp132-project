@@ -38,10 +38,10 @@ public class SharpenFilter implements Filter {
 				int blurredGreen = blurredImageMatrix.getGreen(i, j);
 				int blurredBlue = blurredImageMatrix.getBlue(i, j);
 
-				// Subtract the blurred image from the original image
-				int red = Math.max(0, originalRed - blurredRed);
-				int green = Math.max(0, originalGreen - blurredGreen);
-				int blue = Math.max(0, originalBlue - blurredBlue);
+				// Subtract the blurred image from the original image (prevent the value from going out of bounds)
+				int red = Math.min(Math.max(0, originalRed - blurredRed),255);
+				int green = Math.min(Math.max(0, originalGreen - blurredGreen),255);
+				int blue = Math.min(Math.max(0, originalBlue - blurredBlue),255);
 
 				int detailRGB = ImageMatrix.convertRGB(red, green, blue);
 				detailImageMatrix.setRGB(i, j, detailRGB);
@@ -59,10 +59,10 @@ public class SharpenFilter implements Filter {
 				int detailRed = detailImageMatrix.getRed(i, j);
 				int detailGreen = detailImageMatrix.getGreen(i, j);
 				int detailBlue = detailImageMatrix.getBlue(i, j);
-
-				int red = Math.max(0, detailRed + originalRed);
-				int green = Math.max(0, detailGreen + originalGreen);
-				int blue = Math.max(0, detailBlue + originalBlue);
+				// prevent the value from going out of bounds
+				int red = Math.min(255, Math.max(0, detailRed + originalRed));
+				int green = Math.min(255, Math.max(0, detailGreen + originalGreen));
+				int blue = Math.min(255, Math.max(0, detailBlue + originalBlue));
 
 				int sharpRGB = ImageMatrix.convertRGB(red, green, blue);
 				sharpImageMatrix.setRGB(i, j, sharpRGB);
