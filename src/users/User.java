@@ -68,7 +68,11 @@ public class User {
 		this.profilePhoto = "default_user.png";
 		this.userTier = userTier;
 	}
-
+	/**
+	 * Equals method for the User class
+	 * @param other the other user to compare with this user
+	 * @return true if they have the same nickname
+	 */
 	public boolean equals(User other) {
 		return nickname.equals(other.getNickname());
 	}
@@ -77,27 +81,45 @@ public class User {
 	public int getAge() {
 		return age;
 	}
-
+	/**
+	 * Returns the user's email adress
+	 * @return the user's email adress
+	 */
 	public String getEmail() {
 		return email;
 	}
-
+	/**
+	 * Returns the user's name
+	 * @return the user's name
+	 */
 	public String getName() {
 		return name;
 	}
-
+	/**
+	 * Returns the user's nickname
+	 * @return the user's nickname
+	 */
 	public String getNickname() {
 		return nickname;
 	}
-
+	/**
+	 * Returns the user's pasword
+	 * @return the user's pasword
+	 */
 	public String getPassword() {
 		return password;
 	}
-
+	/**
+	 * Returns the user's profile photo's name
+	 * @return the user's profile photo's name
+	 */
 	public String getProfilePhoto() {
 		return profilePhoto;
 	}
-
+	/**
+	 * Returns the user's profile photo as a BufferedImage
+	 * @return the user's profile photo as a BufferedImage
+	 */
 	public BufferedImage getProfilePhotoImage() {
 		BufferedImage profilePhoto = null;
 		try {
@@ -108,35 +130,59 @@ public class User {
 		}
 		return profilePhoto;
 	}
-
+	/**
+	 * Returns the user's surname
+	 * @return the user's surname
+	 */
 	public String getSurname() {
 		return surname;
 	}
-
+	/**
+	 * Returns the user's tier
+	 * @return the user's tier
+	 */
 	public UserTier getUserTier() {
 		return userTier;
 	}
-
+	/**
+	 * Sets the user's age to given value
+	 * @param age
+	 */
 	public void setAge(int age) {
 		this.age = Math.max(age, 0);
 	}
-
+	/**
+	 * Sets the user's email adress to given value
+	 * @param email
+	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	/**
+	 * Sets the user's name to given value
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	/**
+	 * Sets the user's password to given value
+	 * @param password
+	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	/**
+	 * Sets the user's profile photo to given value
+	 * @param profilePhoto
+	 */
 	public void setProfilePhoto(String profilePhoto) {
 		this.profilePhoto = profilePhoto;
 	}
-
+	/**
+	 * Sets the user's surname to given value
+	 * @param surname
+	 */
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
