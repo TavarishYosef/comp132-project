@@ -10,7 +10,7 @@ import image.ImageMatrix;
  */
 public class EdgeDetection implements Filter {
 
-	private static final int BLUR_DEGREE = 3;
+	private static final int BLUR_DEGREE = 2;
 	private static final int[][] SOBEL_X = { { -1, 0, 1 }, { -2, 0, 2 }, { -1, 0, 1 } };
 	private static final int[][] SOBEL_Y = { { -1, -2, -1 }, { 0, 0, 0 }, { 1, 2, 1 } };
 
