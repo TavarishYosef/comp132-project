@@ -300,3 +300,7 @@
 [Per May 25 03:56:30 TRT 2023][INFO] User User logged in
 [Per May 25 04:01:48 TRT 2023][INFO] User User logged in
 [Per May 25 04:02:40 TRT 2023][INFO] User User logged out.
+[Per May 25 05:16:07 TRT 2023][INFO] User admin logged in
+[Per May 25 05:16:19 TRT 2023][INFO] User admin opened file kuphoto.jpg
+[Per May 25 05:16:24 TRT 2023][INFO] Edge Detection filter applied to file, took: 434ms
+[Per May 25 05:16:30 TRT 2023][INFO] User admin logged out.
