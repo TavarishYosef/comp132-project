@@ -61,8 +61,6 @@ public class SignupPage extends JFrame {
 		setTitle("PhotoCloud Signup Page");
 		setResizable(false);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
 		// This panel is for controlling the window borders
