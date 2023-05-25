@@ -51,7 +51,7 @@ public class OwnPhotoPage extends JFrame {
 			}
 		}
 
-		// Add the gridPanel to a DiscoverPage
+		// Add the gridPanel
 		scrollPane.setViewportView(gridPanel);
 		gridPanel.setBorder(new EmptyBorder(0, 0, 0, 10));
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -70,13 +70,13 @@ public class OwnPhotoPage extends JFrame {
 		HashMap<Integer, Post> posts = userManager.getPostMap();
 		for (Post post : posts.values()) {
 			if (post.isPublic()) {
-				PhotoGridCell photoGridCell = new PhotoGridCell(post, user);
+				ManagePhotoGridCell photoGridCell = new ManagePhotoGridCell(post, user);
 				photoGridCell.setPreferredSize(new Dimension(160, 200));
 				gridPanel.add(photoGridCell);
 			}
 		}
 
-		// Add the gridPanel to a DiscoverPage
+		// Add the gridPanel
 		scrollPane.setViewportView(gridPanel);
 		gridPanel.setBorder(new EmptyBorder(0, 0, 0, 10));
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
