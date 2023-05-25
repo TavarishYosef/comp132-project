@@ -157,8 +157,8 @@ public class PrivateProfilePage extends JPanel {
 		add(passwordButton, gbc_passwordButton);
 
 		GridBagConstraints gbc_postsButton = new GridBagConstraints();
-		gbc_postsButton.gridx = 1;
-		gbc_postsButton.gridy = 11;
+		gbc_postsButton.gridx = 0;
+		gbc_postsButton.gridy = 9;
 		add(postsButton, gbc_postsButton);
 
 		// Add actions to buttons
